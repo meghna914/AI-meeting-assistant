@@ -812,36 +812,84 @@
     </script>
   </section>
 </div>
-<footer class="footer">
-    <style>
-        .footer {
-            background: black;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            position: relative;
-            bottom: 0;
-            width: 100%;
-            font-family: inherit;
-        }
-        .footer a {
-            color: white;
-            text-decoration: none;
-            margin: 0 10px;
-        }
-        .footer a:hover {
-            text-decoration: underline;
-        }
-        .social-icons {
-            margin-top: 10px;
-        }
-    </style>
-    <p>&copy; 2025 MeetAI. All Rights Reserved.</p>
-    <p>Contact: <a href="mailto:contact@meetai.com">contact@meetai.com</a> | Phone: +1 234 567 890</p>
-    <div class="social-icons">
-        <a href="#">Facebook</a> |
-        <a href="#">Twitter</a> |
-        <a href="#">LinkedIn</a> |
-        <a href="#">Instagram</a>
-    </div>
+<footer class="bg-neutral-900 border-t border-neutral-800">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <!-- Footer Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+          <!-- Brand Column -->
+          <div class="space-y-4">
+              <div class="flex items-center">
+                  <span class="text-2xl font-bold text-blue-500">MeetAI</span>
+              </div>
+              <p class="text-gray-400">Transform your meetings with AI-powered intelligence and automation.</p>
+              <div class="flex space-x-4">
+                  <a href="#" class="w-10 h-10 bg-neutral-800 hover:bg-neutral-700 rounded-full flex items-center justify-center text-gray-400 hover:text-white transition-colors">
+                      <i class="fab fa-facebook-f"></i>
+                  </a>
+                  <a href="#" class="w-10 h-10 bg-neutral-800 hover:bg-neutral-700 rounded-full flex items-center justify-center text-gray-400 hover:text-white transition-colors">
+                      <i class="fab fa-twitter"></i>
+                  </a>
+                  <a href="#" class="w-10 h-10 bg-neutral-800 hover:bg-neutral-700 rounded-full flex items-center justify-center text-gray-400 hover:text-white transition-colors">
+                      <i class="fab fa-linkedin-in"></i>
+                  </a>
+                  <a href="#" class="w-10 h-10 bg-neutral-800 hover:bg-neutral-700 rounded-full flex items-center justify-center text-gray-400 hover:text-white transition-colors">
+                      <i class="fab fa-instagram"></i>
+                  </a>
+              </div>
+          </div>
+
+          <!-- Quick Links -->
+          <div>
+              <h3 class="text-white font-semibold mb-4">Product</h3>
+              <ul class="space-y-2">
+                  <li><a href="#features" class="text-gray-400 hover:text-white transition-colors">Features</a></li>
+                  <li><a href="#workflow" class="text-gray-400 hover:text-white transition-colors">How It Works</a></li>
+                  <li><a href="#pricing" class="text-gray-400 hover:text-white transition-colors">Pricing</a></li>
+                  <li><a href="#integrations" class="text-gray-400 hover:text-white transition-colors">Integrations</a></li>
+              </ul>
+          </div>
+
+          <!-- Resources -->
+          <div>
+              <h3 class="text-white font-semibold mb-4">Resources</h3>
+              <ul class="space-y-2">
+                  <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Documentation</a></li>
+                  <li><a href="#" class="text-gray-400 hover:text-white transition-colors">API Reference</a></li>
+                  <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Blog</a></li>
+                  <li><a href="#faq" class="text-gray-400 hover:text-white transition-colors">FAQ</a></li>
+              </ul>
+          </div>
+
+          <!-- Contact -->
+          <div>
+              <h3 class="text-white font-semibold mb-4">Contact</h3>
+              <ul class="space-y-2">
+                  <li class="flex items-center text-gray-400">
+                      <i class="far fa-envelope mr-2"></i>
+                      <a href="mailto:contact@meetai.com" class="hover:text-white transition-colors">contact@meetai.com</a>
+                  </li>
+                  <li class="flex items-center text-gray-400">
+                      <i class="fas fa-phone mr-2"></i>
+                      <a href="tel:+12345678901" class="hover:text-white transition-colors">+1 234 567 8901</a>
+                  </li>
+                  <li class="flex items-center text-gray-400">
+                      <i class="fas fa-map-marker-alt mr-2"></i>
+                      <span>San Francisco, CA</span>
+                  </li>
+              </ul>
+          </div>
+      </div>
+
+      <!-- Bottom Bar -->
+      <div class="pt-8 border-t border-neutral-800">
+          <div class="flex flex-col md:flex-row justify-between items-center">
+              <p class="text-gray-400 text-sm">&copy; 2025 MeetAI. All rights reserved.</p>
+              <div class="flex space-x-6 mt-4 md:mt-0">
+                  <a href="#" class="text-gray-400 hover:text-white text-sm transition-colors">Privacy Policy</a>
+                  <a href="#" class="text-gray-400 hover:text-white text-sm transition-colors">Terms of Service</a>
+                  <a href="#" class="text-gray-400 hover:text-white text-sm transition-colors">Cookie Policy</a>
+              </div>
+          </div>
+      </div>
+  </div>
 </footer>
