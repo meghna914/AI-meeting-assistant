@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MeetAI Dashboard - Decisions</title>
+    <meta name="description" content="Review and make critical decisions." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+  </head>
+  <body class="antialiased text-gray-800 min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="relative z-50 bg-white dark:bg-gray-900">
+      <div class="p-4">
+        <h1 class="text-2xl font-bold">MeetAI Dashboard</h1>
+      </div>
+    </header>
+    <div id="root" class="flex h-screen overflow-hidden">
+      <!-- Sidebar Navigation -->
+      <nav class="hidden lg:flex flex-col w-64 bg-white border-r border-neutral-200/20">
+        <div class="p-4 border-b border-neutral-200/20">
+          <div class="text-2xl font-bold text-neutral-800">MeetAI</div>
+        </div>
+        <div class="flex-1 overflow-y-auto">
+          <div class="px-2 py-4 space-y-1">
+            <a href="{{ url_for('overview') }}" class="flex items-center px-4 py-2 text-neutral-600 hover:bg-neutral-100 transition-colors">
+              Overview
+            </a>
+            <a href="{{ url_for('meetings') }}" class="flex items-center px-4 py-2 text-neutral-600 hover:bg-neutral-100 transition-colors">
+              Meetings
+            </a>
+            <a href="{{ url_for('recordings') }}" class="flex items-center px-4 py-2 text-neutral-600 hover:bg-neutral-100 transition-colors">
+              Recordings
+            </a>
+            <a href="{{ url_for('tasks') }}" class="flex items-center px-4 py-2 text-neutral-600 hover:bg-neutral-100 transition-colors">
+              Tasks
+            </a>
+            <a href="{{ url_for('decisions') }}" class="flex items-center px-4 py-2 text-neutral-700 bg-neutral-100">
+              Decisions
+            </a>
+            <a href="{{ url_for('analytics') }}" class="flex items-center px-4 py-2 text-neutral-600 hover:bg-neutral-100 transition-colors">
+              Analytics
+            </a>
+            <a href="{{ url_for('settings_page') }}" class="flex items-center px-4 py-2 text-neutral-600 hover:bg-neutral-100 transition-colors">
+              Settings
+            </a>
+          </div>
+        </div>
+        <div class="p-4 border-t border-neutral-200/20">
+          <div class="flex items-center">
+            <div class="flex-shrink-0">
+              <div class="w-8 h-8 rounded-full bg-neutral-200"></div>
+            </div>
+            <div class="ml-3">
+              <p class="text-sm font-medium text-neutral-700">John Doe</p>
+              <p class="text-xs text-neutral-500">john@example.com</p>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <!-- Main Content Area -->
+      <main class="flex-1 overflow-y-auto bg-[#E5E7EB] p-6">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+          <h1 class="text-2xl font-bold text-neutral-800">Critical Decisions</h1>
+          <div class="flex flex-col sm:flex-row gap-4">
+            <select class="px-4 py-2 rounded-lg border border-neutral-200/20 bg-white focus:outline-none focus:border-neutral-300">
+              <option>All Decisions</option>
+              <option>Pending</option>
+              <option>Resolved</option>
+            </select>
+          </div>
+        </div>
+        <div class="space-y-6">
+          <!-- Decision Card 1 -->
+          <div class="bg-white rounded-lg border border-neutral-200/20">
+            <div class="p-6">
+              <div class="flex justify-between items-start mb-4">
+                <div>
+                  <div class="flex items-center gap-3 mb-2">
+                    <span class="px-3 py-1 text-sm bg-yellow-100 text-yellow-600 rounded-full">Pending Decision</span>
+                    <span class="text-sm text-neutral-500">Due in 2 days</span>
+                  </div>
+                  <h2 class="text-lg font-semibold text-neutral-800">Q4 Technology Stack Selection</h2>
+                </div>
+                <button class="p-2 hover:bg-neutral-100 rounded-lg">
+                  <svg class="w-5 h-5 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"></path>
+                  </svg>
+                </button>
+              </div>
+              <div class="mb-6">
+                <p class="text-neutral-600 mb-4">Decision needed on the primary technology stack for the upcoming project phase. Consider scalability, team expertise, and long-term maintenance.</p>
+                <div class="space-y-3">
+                  <div class="flex items-center gap-3">
+                    <input type="radio" name="decision1" id="option1" class="w-4 h-4 text-blue-500">
+                    <label for="option1" class="text-neutral-700">Continue with current stack (Node.js + React)</label>
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <input type="radio" name="decision1" id="option2" class="w-4 h-4 text-blue-500">
+                    <label for="option2" class="text-neutral-700">Migrate to Python + Django for backend</label>
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <input type="radio" name="decision1" id="option3" class="w-4 h-4 text-blue-500">
+                    <label for="option3" class="text-neutral-700">Adopt full‑stack TypeScript solution</label>
+                  </div>
+                </div>
+              </div>
+              <div class="flex justify-between items-center">
+                <button class="px-4 py-2 text-blue-500 hover:bg-blue-50 rounded-lg transition-colors">View Context</button>
+                <button class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">Make Decision</button>
+              </div>
+            </div>
+          </div>
+          <!-- Decision Card 2 -->
+          <div class="bg-white rounded-lg border border-neutral-200/20">
+            <div class="p-6">
+              <div class="flex justify-between items-start mb-4">
+                <div>
+                  <div class="flex items-center gap-3 mb-2">
+                    <span class="px-3 py-1 text-sm bg-red-100 text-red-600 rounded-full">Urgent</span>
+                    <span class="text-sm text-neutral-500">Due tomorrow</span>
+                  </div>
+                  <h2 class="text-lg font-semibold text-neutral-800">Project Timeline Adjustment</h2>
+                </div>
+                <button class="p-2 hover:bg-neutral-100 rounded-lg">
+                  <svg class="w-5 h-5 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"></path>
+                  </svg>
+                </button>
+              </div>
+              <div class="mb-6">
+                <p class="text-neutral-600 mb-4">Need to adjust project timeline due to additional requirements from stakeholders.</p>
+                <div class="space-y-3">
+                  <div class="flex items-center gap-3">
+                    <input type="radio" name="decision2" id="timeline1" class="w-4 h-4 text-blue-500">
+                    <label for="timeline1" class="text-neutral-700">Extend deadline by 2 weeks</label>
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <input type="radio" name="decision2" id="timeline2" class="w-4 h-4 text-blue-500">
+                    <label for="timeline2" class="text-neutral-700">Add additional resources to meet current deadline</label>
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <input type="radio" name="decision2" id="timeline3" class="w-4 h-4 text-blue-500">
+                    <label for="timeline3" class="text-neutral-700">Reduce scope to maintain deadline</label>
+                  </div>
+                </div>
+              </div>
+              <div class="flex justify-between items-center">
+                <button class="px-4 py-2 text-blue-500 hover:bg-blue-50 rounded-lg transition-colors">View Context</button>
+                <button class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">Make Decision</button>
+              </div>
+            </div>
+          </div>
+          <!-- Decision Card 3 (Resolved) -->
+          <div class="bg-white rounded-lg border border-neutral-200/20 opacity-75">
+            <div class="p-6">
+              <div class="flex justify-between items-start mb-4">
+                <div>
+                  <div class="flex items-center gap-3 mb-2">
+                    <span class="px-3 py-1 text-sm bg-green-100 text-green-600 rounded-full">Resolved</span>
+                    <span class="text-sm text-neutral-500">Decided Sep 15</span>
+                  </div>
+                  <h2 class="text-lg font-semibold text-neutral-800">API Documentation Format</h2>
+                </div>
+              </div>
+              <div class="mb-6">
+                <p class="text-neutral-600 mb-4">Selected OpenAPI/Swagger for API documentation standard.</p>
+                <div class="bg-neutral-50 p-4 rounded-lg">
+                  <p class="text-sm text-neutral-600">Decision rationale: Better tooling support and wider community adoption.</p>
+                </div>
+              </div>
+              <div class="flex justify-end">
+                <button class="px-4 py-2 text-blue-500 hover:bg-blue-50 rounded-lg transition-colors">View Details</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+    <!-- Custom JavaScript -->
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+  </body>
+</html>
