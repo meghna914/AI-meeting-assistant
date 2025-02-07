@@ -3,8 +3,14 @@
   "name": "cloudflare",
   "main": "src/index.ts",
   "compatibility_date": "2025-02-04",
+  "account_id": "df83904bef3ba8d5e545a35b35a9807c",
+  "workers_dev": true,
   "observability": {
     "enabled": true
+  },
+  "routes": [],
+  "build": {
+    "command": "npm run build"
   },
   "ai": {
     "binding": "AI"
