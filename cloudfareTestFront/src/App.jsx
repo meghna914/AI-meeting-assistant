@@ -35,7 +35,6 @@ function App() {
         body: formData,
       });
 
-      // If the response is not OK, extract and display the error
       if (!response.ok) {
         const errorText = await response.text();
         throw new Error(errorText);
