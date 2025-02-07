@@ -1,194 +1,124 @@
-<!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MeetAI Dashboard - Tasks</title>
-    <meta name="description" content="Manage your tasks effectively." />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- Google Fonts -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
-      rel="stylesheet"
-    />
-    <!-- Tailwind CSS via CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
-  </head>
-  <body class="antialiased text-gray-800 min-h-screen flex flex-col">
-    <!-- Header -->
-    <header class="relative z-50 bg-white dark:bg-gray-900">
-      <div class="p-4">
-        <h1 class="text-2xl font-bold">MeetAI Dashboard</h1>
-      </div>
-    </header>
-    <div id="root" class="flex h-screen overflow-hidden">
-      <!-- Sidebar Navigation -->
-      <nav class="hidden lg:flex flex-col w-64 bg-white border-r border-neutral-200/20">
-        <div class="p-4 border-b border-neutral-200/20">
-          <div class="text-2xl font-bold text-neutral-800">MeetAI</div>
-        </div>
-        <div class="flex-1 overflow-y-auto">
-          <div class="px-2 py-4 space-y-1">
-            <a href="{{ url_for('overview') }}" class="flex items-center px-4 py-2 text-neutral-600 hover:bg-neutral-100 transition-colors">
-              Overview
-            </a>
-            <a href="{{ url_for('meetings') }}" class="flex items-center px-4 py-2 text-neutral-600 hover:bg-neutral-100 transition-colors">
-              Meetings
-            </a>
-            <a href="{{ url_for('recordings') }}" class="flex items-center px-4 py-2 text-neutral-600 hover:bg-neutral-100 transition-colors">
-              Recordings
-            </a>
-            <a href="{{ url_for('tasks') }}" class="flex items-center px-4 py-2 text-neutral-700 bg-neutral-100">
-              Tasks
-            </a>
-            <a href="{{ url_for('decisions') }}" class="flex items-center px-4 py-2 text-neutral-600 hover:bg-neutral-100 transition-colors">
-              Decisions
-            </a>
-            <a href="{{ url_for('analytics') }}" class="flex items-center px-4 py-2 text-neutral-600 hover:bg-neutral-100 transition-colors">
-              Analytics
-            </a>
-            <a href="{{ url_for('settings_page') }}" class="flex items-center px-4 py-2 text-neutral-600 hover:bg-neutral-100 transition-colors">
-              Settings
-            </a>
-          </div>
-        </div>
-        <div class="p-4 border-t border-neutral-200/20">
-          <div class="flex items-center">
-            <div class="flex-shrink-0">
-              <div class="w-8 h-8 rounded-full bg-neutral-200"></div>
-            </div>
-            <div class="ml-3">
-              <p class="text-sm font-medium text-neutral-700">John Doe</p>
-              <p class="text-xs text-neutral-500">john@example.com</p>
-            </div>
-          </div>
-        </div>
-      </nav>
-      <!-- Main Content Area -->
-      <main class="flex-1 overflow-y-auto bg-[#E5E7EB] p-6">
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
-          <h1 class="text-2xl font-bold text-neutral-800">Task Management</h1>
-          <div class="flex flex-col sm:flex-row gap-4">
-            <div class="relative">
-              <input
+{% extends "base.html" %}
+
+{% block title %}Tasks{% endblock %}
+{% block description %}Manage your tasks effectively.{% endblock %}
+
+{% block content %}
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+    <h1 class="text-2xl font-bold text-neutral-800">Task Management</h1>
+    <div class="flex flex-col sm:flex-row gap-4">
+        <div class="relative">
+            <input
                 type="text"
                 placeholder="Search tasks..."
                 class="pl-10 pr-4 py-2 rounded-lg border border-neutral-200/20 bg-white focus:outline-none focus:border-neutral-300"
-              />
-              <svg
+            />
+            <svg
                 class="absolute left-3 top-2.5 h-5 w-5 text-neutral-400"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
-              >
+            >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                 />
-              </svg>
-            </div>
-            <button class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors flex items-center gap-2">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-              </svg>
-              New Task
-            </button>
-          </div>
+            </svg>
         </div>
-        <!-- Kanban Board -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <!-- To Do Column -->
-          <div class="bg-white rounded-lg border border-neutral-200/20 p-4">
-            <div class="flex justify-between items-center mb-4">
-              <h2 class="font-semibold text-neutral-800">To Do</h2>
-              <span class="px-3 py-1 text-sm bg-neutral-100 text-neutral-600 rounded-full">4</span>
-            </div>
-            <div class="space-y-4">
-              <div class="bg-white rounded-lg border border-neutral-200/20 p-4 cursor-pointer hover:shadow-sm transition-shadow">
+        <button class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors flex items-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+            New Task
+        </button>
+    </div>
+</div>
+<!-- Kanban Board -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <!-- To Do Column -->
+    <div class="bg-white rounded-lg border border-neutral-200/20 p-4">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="font-semibold text-neutral-800">To Do</h2>
+            <span class="px-3 py-1 text-sm bg-neutral-100 text-neutral-600 rounded-full">4</span>
+        </div>
+        <div class="space-y-4">
+            <div class="bg-white rounded-lg border border-neutral-200/20 p-4 cursor-pointer hover:shadow-sm transition-shadow">
                 <div class="flex justify-between items-start mb-2">
-                  <h3 class="font-medium text-neutral-800">Update documentation</h3>
-                  <span class="px-2 py-1 text-xs bg-red-100 text-red-600 rounded-full">High</span>
+                    <h3 class="font-medium text-neutral-800">Update documentation</h3>
+                    <span class="px-2 py-1 text-xs bg-red-100 text-red-600 rounded-full">High</span>
                 </div>
                 <p class="text-sm text-neutral-600 mb-3">Review and update API documentation with new endpoints</p>
                 <div class="flex justify-between items-center">
-                  <div class="flex items-center gap-2">
-                    <div class="w-6 h-6 rounded-full bg-blue-100"></div>
-                    <span class="text-sm text-neutral-500">John Doe</span>
-                  </div>
-                  <span class="text-sm text-neutral-500">Due Sep 20</span>
+                    <div class="flex items-center gap-2">
+                        <div class="w-6 h-6 rounded-full bg-blue-100"></div>
+                        <span class="text-sm text-neutral-500">John Doe</span>
+                    </div>
+                    <span class="text-sm text-neutral-500">Due Sep 20</span>
                 </div>
-              </div>
-              <div class="bg-white rounded-lg border border-neutral-200/20 p-4 cursor-pointer hover:shadow-sm transition-shadow">
+            </div>
+            <div class="bg-white rounded-lg border border-neutral-200/20 p-4 cursor-pointer hover:shadow-sm transition-shadow">
                 <div class="flex justify-between items-start mb-2">
-                  <h3 class="font-medium text-neutral-800">Prepare presentation</h3>
-                  <span class="px-2 py-1 text-xs bg-yellow-100 text-yellow-600 rounded-full">Medium</span>
+                    <h3 class="font-medium text-neutral-800">Prepare presentation</h3>
+                    <span class="px-2 py-1 text-xs bg-yellow-100 text-yellow-600 rounded-full">Medium</span>
                 </div>
                 <p class="text-sm text-neutral-600 mb-3">Create slides for client meeting</p>
                 <div class="flex justify-between items-center">
-                  <div class="flex items-center gap-2">
-                    <div class="w-6 h-6 rounded-full bg-green-100"></div>
-                    <span class="text-sm text-neutral-500">Jane Smith</span>
-                  </div>
-                  <span class="text-sm text-neutral-500">Due Sep 22</span>
+                    <div class="flex items-center gap-2">
+                        <div class="w-6 h-6 rounded-full bg-green-100"></div>
+                        <span class="text-sm text-neutral-500">Jane Smith</span>
+                    </div>
+                    <span class="text-sm text-neutral-500">Due Sep 22</span>
                 </div>
-              </div>
             </div>
-          </div>
-          <!-- In Progress Column -->
-          <div class="bg-white rounded-lg border border-neutral-200/20 p-4">
-            <div class="flex justify-between items-center mb-4">
-              <h2 class="font-semibold text-neutral-800">In Progress</h2>
-              <span class="px-3 py-1 text-sm bg-neutral-100 text-neutral-600 rounded-full">3</span>
-            </div>
-            <div class="space-y-4">
-              <div class="bg-white rounded-lg border border-neutral-200/20 p-4 cursor-pointer hover:shadow-sm transition-shadow">
+        </div>
+    </div>
+    <!-- In Progress Column -->
+    <div class="bg-white rounded-lg border border-neutral-200/20 p-4">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="font-semibold text-neutral-800">In Progress</h2>
+            <span class="px-3 py-1 text-sm bg-neutral-100 text-neutral-600 rounded-full">3</span>
+        </div>
+        <div class="space-y-4">
+            <div class="bg-white rounded-lg border border-neutral-200/20 p-4 cursor-pointer hover:shadow-sm transition-shadow">
                 <div class="flex justify-between items-start mb-2">
-                  <h3 class="font-medium text-neutral-800">Implement API changes</h3>
-                  <span class="px-2 py-1 text-xs bg-red-100 text-red-600 rounded-full">High</span>
+                    <h3 class="font-medium text-neutral-800">Implement API changes</h3>
+                    <span class="px-2 py-1 text-xs bg-red-100 text-red-600 rounded-full">High</span>
                 </div>
                 <p class="text-sm text-neutral-600 mb-3">Update backend endpoints for new features</p>
                 <div class="flex justify-between items-center">
-                  <div class="flex items-center gap-2">
-                    <div class="w-6 h-6 rounded-full bg-purple-100"></div>
-                    <span class="text-sm text-neutral-500">Mike Johnson</span>
-                  </div>
-                  <span class="text-sm text-neutral-500">Due Sep 21</span>
+                    <div class="flex items-center gap-2">
+                        <div class="w-6 h-6 rounded-full bg-purple-100"></div>
+                        <span class="text-sm text-neutral-500">Mike Johnson</span>
+                    </div>
+                    <span class="text-sm text-neutral-500">Due Sep 21</span>
                 </div>
-              </div>
             </div>
-          </div>
-          <!-- Completed Column -->
-          <div class="bg-white rounded-lg border border-neutral-200/20 p-4">
-            <div class="flex justify-between items-center mb-4">
-              <h2 class="font-semibold text-neutral-800">Completed</h2>
-              <span class="px-3 py-1 text-sm bg-neutral-100 text-neutral-600 rounded-full">2</span>
-            </div>
-            <div class="space-y-4">
-              <div class="bg-white rounded-lg border border-neutral-200/20 p-4 cursor-pointer hover:shadow-sm transition-shadow opacity-75">
+        </div>
+    </div>
+    <!-- Completed Column -->
+    <div class="bg-white rounded-lg border border-neutral-200/20 p-4">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="font-semibold text-neutral-800">Completed</h2>
+            <span class="px-3 py-1 text-sm bg-neutral-100 text-neutral-600 rounded-full">2</span>
+        </div>
+        <div class="space-y-4">
+            <div class="bg-white rounded-lg border border-neutral-200/20 p-4 cursor-pointer hover:shadow-sm transition-shadow opacity-75">
                 <div class="flex justify-between items-start mb-2">
-                  <h3 class="font-medium text-neutral-800">Code review</h3>
-                  <span class="px-2 py-1 text-xs bg-green-100 text-green-600 rounded-full">Done</span>
+                    <h3 class="font-medium text-neutral-800">Code review</h3>
+                    <span class="px-2 py-1 text-xs bg-green-100 text-green-600 rounded-full">Done</span>
                 </div>
                 <p class="text-sm text-neutral-600 mb-3">Review pull requests for frontend changes</p>
                 <div class="flex justify-between items-center">
-                  <div class="flex items-center gap-2">
-                    <div class="w-6 h-6 rounded-full bg-indigo-100"></div>
-                    <span class="text-sm text-neutral-500">Sarah Wilson</span>
-                  </div>
-                  <span class="text-sm text-neutral-500">Completed Sep 18</span>
+                    <div class="flex items-center gap-2">
+                        <div class="w-6 h-6 rounded-full bg-indigo-100"></div>
+                        <span class="text-sm text-neutral-500">Sarah Wilson</span>
+                    </div>
+                    <span class="text-sm text-neutral-500">Completed Sep 18</span>
                 </div>
-              </div>
             </div>
-          </div>
         </div>
-      </main>
     </div>
-    <!-- Custom JavaScript -->
-    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
-  </body>
-</html>
+</div>
+{% endblock %}

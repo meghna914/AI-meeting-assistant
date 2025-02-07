@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MeetAI Dashboard - {% block title %}{% endblock %}</title>
+    <meta name="description" content="{% block description %}{% endblock %}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+</head>
+<body class="antialiased text-gray-800 min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="relative z-50 bg-white dark:bg-gray-900">
+        <div class="p-4">
+            <h1 class="text-2xl font-bold">MeetAI Dashboard</h1>
+        </div>
+    </header>
+    <div id="root" class="flex h-screen overflow-hidden">
+        {% include 'sidebar.html' %}
+        <!-- Main Content Area -->
+        <main class="flex-1 overflow-y-auto bg-[#E5E7EB] p-6">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+</body>
+</html>

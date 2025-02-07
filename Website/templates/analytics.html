@@ -1,172 +1,102 @@
-<!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MeetAI Dashboard - Analytics</title>
-    <meta name="description" content="Analytics Dashboard for meeting metrics." />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- Google Fonts -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
-      rel="stylesheet"
-    />
-    <!-- Tailwind CSS via CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
-  </head>
-  <body class="antialiased text-gray-800 min-h-screen flex flex-col">
-    <!-- Header -->
-    <header class="relative z-50 bg-white dark:bg-gray-900">
-      <div class="p-4">
-        <h1 class="text-2xl font-bold">MeetAI Dashboard</h1>
-      </div>
-    </header>
-    <div id="root" class="flex h-screen overflow-hidden">
-      <!-- Sidebar Navigation -->
-      <nav class="hidden lg:flex flex-col w-64 bg-white border-r border-neutral-200/20">
-        <div class="p-4 border-b border-neutral-200/20">
-          <div class="text-2xl font-bold text-neutral-800">MeetAI</div>
-        </div>
-        <div class="flex-1 overflow-y-auto">
-          <div class="px-2 py-4 space-y-1">
-            <a href="{{ url_for('overview') }}" class="flex items-center px-4 py-2 text-neutral-600 hover:bg-neutral-100 transition-colors">
-              Overview
-            </a>
-            <a href="{{ url_for('meetings') }}" class="flex items-center px-4 py-2 text-neutral-600 hover:bg-neutral-100 transition-colors">
-              Meetings
-            </a>
-            <a href="{{ url_for('recordings') }}" class="flex items-center px-4 py-2 text-neutral-600 hover:bg-neutral-100 transition-colors">
-              Recordings
-            </a>
-            <a href="{{ url_for('tasks') }}" class="flex items-center px-4 py-2 text-neutral-600 hover:bg-neutral-100 transition-colors">
-              Tasks
-            </a>
-            <a href="{{ url_for('decisions') }}" class="flex items-center px-4 py-2 text-neutral-600 hover:bg-neutral-100 transition-colors">
-              Decisions
-            </a>
-            <a href="{{ url_for('analytics') }}" class="flex items-center px-4 py-2 text-neutral-700 bg-neutral-100">
-              Analytics
-            </a>
-            <a href="{{ url_for('settings_page') }}" class="flex items-center px-4 py-2 text-neutral-600 hover:bg-neutral-100 transition-colors">
-              Settings
-            </a>
-          </div>
-        </div>
-        <div class="p-4 border-t border-neutral-200/20">
-          <div class="flex items-center">
-            <div class="flex-shrink-0">
-              <div class="w-8 h-8 rounded-full bg-neutral-200"></div>
-            </div>
-            <div class="ml-3">
-              <p class="text-sm font-medium text-neutral-700">John Doe</p>
-              <p class="text-xs text-neutral-500">john@example.com</p>
-            </div>
-          </div>
-        </div>
-      </nav>
-      <!-- Main Content Area -->
-      <main class="flex-1 overflow-y-auto bg-[#E5E7EB] p-6">
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
-          <h1 class="text-2xl font-bold text-neutral-800">Analytics Dashboard</h1>
-          <select class="px-4 py-2 rounded-lg border border-neutral-200/20 bg-white focus:outline-none focus:border-neutral-300">
-            <option>Last 7 days</option>
-            <option>Last 30 days</option>
-            <option>Last 3 months</option>
-            <option>Last year</option>
-            <option>Custom range</option>
-          </select>
-        </div>
-        <!-- Key Metrics Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <!-- Meeting Time Saved -->
-          <div class="bg-white rounded-lg border border-neutral-200/20 p-6">
-            <div class="flex items-center justify-between mb-4">
-              <h3 class="text-neutral-500">Meeting Time Saved</h3>
-              <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+{% extends "base.html" %}
+
+{% block title %}Analytics{% endblock %}
+{% block description %}Analytics Dashboard for meeting metrics.{% endblock %}
+
+{% block content %}
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+    <h1 class="text-2xl font-bold text-neutral-800">Analytics Dashboard</h1>
+    <select class="px-4 py-2 rounded-lg border border-neutral-200/20 bg-white focus:outline-none focus:border-neutral-300">
+        <option>Last 7 days</option>
+        <option>Last 30 days</option>
+        <option>Last 3 months</option>
+        <option>Last year</option>
+        <option>Custom range</option>
+    </select>
+</div>
+<!-- Key Metrics Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <!-- Meeting Time Saved -->
+    <div class="bg-white rounded-lg border border-neutral-200/20 p-6">
+        <div class="flex items-center justify-between mb-4">
+            <h3 class="text-neutral-500">Meeting Time Saved</h3>
+            <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-              </svg>
-            </div>
-            <p class="text-3xl font-bold text-neutral-800">48.5h</p>
-            <p class="text-sm text-green-500 mt-2">↑ 12% from last period</p>
-          </div>
-          <!-- Tasks Completed -->
-          <div class="bg-white rounded-lg border border-neutral-200/20 p-6">
-            <div class="flex items-center justify-between mb-4">
-              <h3 class="text-neutral-500">Tasks Completed</h3>
-              <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
-              </svg>
-            </div>
-            <p class="text-3xl font-bold text-neutral-800">156</p>
-            <p class="text-sm text-green-500 mt-2">↑ 8% from last period</p>
-          </div>
-          <!-- Decisions Made -->
-          <div class="bg-white rounded-lg border border-neutral-200/20 p-6">
-            <div class="flex items-center justify-between mb-4">
-              <h3 class="text-neutral-500">Decisions Made</h3>
-              <svg class="w-5 h-5 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-              </svg>
-            </div>
-            <p class="text-3xl font-bold text-neutral-800">42</p>
-            <p class="text-sm text-red-500 mt-2">↓ 3% from last period</p>
-          </div>
-          <!-- Active Users -->
-          <div class="bg-white rounded-lg border border-neutral-200/20 p-6">
-            <div class="flex items-center justify-between mb-4">
-              <h3 class="text-neutral-500">Active Users</h3>
-              <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
-              </svg>
-            </div>
-            <p class="text-3xl font-bold text-neutral-800">892</p>
-            <p class="text-sm text-green-500 mt-2">↑ 15% from last period</p>
-          </div>
+            </svg>
         </div>
-        <!-- Charts Grid -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          <!-- Meeting Duration Trends -->
-          <div class="bg-white rounded-lg border border-neutral-200/20 p-6">
-            <h3 class="text-lg font-semibold text-neutral-800 mb-4">Meeting Duration Trends</h3>
-            <div class="h-64 bg-neutral-50 rounded-lg flex items-center justify-center">
-              <p class="text-neutral-500">Chart placeholder: Meeting durations over time</p>
-            </div>
-          </div>
-          <!-- Task Completion Rate -->
-          <div class="bg-white rounded-lg border border-neutral-200/20 p-6">
-            <h3 class="text-lg font-semibold text-neutral-800 mb-4">Task Completion Rate</h3>
-            <div class="h-64 bg-neutral-50 rounded-lg flex items-center justify-center">
-              <p class="text-neutral-500">Chart placeholder: Task completion metrics</p>
-            </div>
-          </div>
-        </div>
-        <!-- Activity Timeline -->
-        <div class="bg-white rounded-lg border border-neutral-200/20 p-6">
-          <h3 class="text-lg font-semibold text-neutral-800 mb-4">Activity Timeline</h3>
-          <div class="space-y-4">
-            <div class="flex items-center gap-4">
-              <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
-              <p class="text-sm text-neutral-600">Overall system usage increased by 24% this week</p>
-              <span class="text-sm text-neutral-500">2 days ago</span>
-            </div>
-            <div class="flex items-center gap-4">
-              <div class="w-2 h-2 bg-green-500 rounded-full"></div>
-              <p class="text-sm text-neutral-600">Record number of meetings processed in a single day</p>
-              <span class="text-sm text-neutral-500">5 days ago</span>
-            </div>
-            <div class="flex items-center gap-4">
-              <div class="w-2 h-2 bg-purple-500 rounded-full"></div>
-              <p class="text-sm text-neutral-600">New feature adoption rate reached 75%</p>
-              <span class="text-sm text-neutral-500">1 week ago</span>
-            </div>
-          </div>
-        </div>
-      </main>
+        <p class="text-3xl font-bold text-neutral-800">48.5h</p>
+        <p class="text-sm text-green-500 mt-2">↑ 12% from last period</p>
     </div>
-    <!-- Custom JavaScript -->
-    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
-  </body>
-</html>
+    <!-- Tasks Completed -->
+    <div class="bg-white rounded-lg border border-neutral-200/20 p-6">
+        <div class="flex items-center justify-between mb-4">
+            <h3 class="text-neutral-500">Tasks Completed</h3>
+            <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+            </svg>
+        </div>
+        <p class="text-3xl font-bold text-neutral-800">156</p>
+        <p class="text-sm text-green-500 mt-2">↑ 8% from last period</p>
+    </div>
+    <!-- Decisions Made -->
+    <div class="bg-white rounded-lg border border-neutral-200/20 p-6">
+        <div class="flex items-center justify-between mb-4">
+            <h3 class="text-neutral-500">Decisions Made</h3>
+            <svg class="w-5 h-5 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+        </div>
+        <p class="text-3xl font-bold text-neutral-800">42</p>
+        <p class="text-sm text-red-500 mt-2">↓ 3% from last period</p>
+    </div>
+    <!-- Active Users -->
+    <div class="bg-white rounded-lg border border-neutral-200/20 p-6">
+        <div class="flex items-center justify-between mb-4">
+            <h3 class="text-neutral-500">Active Users</h3>
+            <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+            </svg>
+        </div>
+        <p class="text-3xl font-bold text-neutral-800">892</p>
+        <p class="text-sm text-green-500 mt-2">↑ 15% from last period</p>
+    </div>
+</div>
+<!-- Charts Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+    <!-- Meeting Duration Trends -->
+    <div class="bg-white rounded-lg border border-neutral-200/20 p-6">
+        <h3 class="text-lg font-semibold text-neutral-800 mb-4">Meeting Duration Trends</h3>
+        <div class="h-64 bg-neutral-50 rounded-lg flex items-center justify-center">
+            <p class="text-neutral-500">Chart placeholder: Meeting durations over time</p>
+        </div>
+    </div>
+    <!-- Task Completion Rate -->
+    <div class="bg-white rounded-lg border border-neutral-200/20 p-6">
+        <h3 class="text-lg font-semibold text-neutral-800 mb-4">Task Completion Rate</h3>
+        <div class="h-64 bg-neutral-50 rounded-lg flex items-center justify-center">
+            <p class="text-neutral-500">Chart placeholder: Task completion metrics</p>
+        </div>
+    </div>
+</div>
+<!-- Activity Timeline -->
+<div class="bg-white rounded-lg border border-neutral-200/20 p-6">
+    <h3 class="text-lg font-semibold text-neutral-800 mb-4">Activity Timeline</h3>
+    <div class="space-y-4">
+        <div class="flex items-center gap-4">
+            <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+            <p class="text-sm text-neutral-600">Overall system usage increased by 24% this week</p>
+            <span class="text-sm text-neutral-500">2 days ago</span>
+        </div>
+        <div class="flex items-center gap-4">
+            <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+            <p class="text-sm text-neutral-600">Record number of meetings processed in a single day</p>
+            <span class="text-sm text-neutral-500">5 days ago</span>
+        </div>
+        <div class="flex items-center gap-4">
+            <div class="w-2 h-2 bg-purple-500 rounded-full"></div>
+            <p class="text-sm text-neutral-600">New feature adoption rate reached 75%</p>
+            <span class="text-sm text-neutral-500">1 week ago</span>
+        </div>
+    </div>
+</div>
+{% endblock %}
