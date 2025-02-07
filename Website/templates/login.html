@@ -1,0 +1,111 @@
+<!-- /login.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login/Signup - MeetAI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-neutral-900 min-h-screen flex items-center justify-center">
+    <div class="max-w-md w-full mx-4">
+        <!-- Login/Signup Toggle -->
+        <div class="bg-neutral-800 p-1 rounded-lg mb-6">
+            <div class="grid grid-cols-2 gap-2">
+                <button onclick="showLogin()" id="loginTab" class="w-full py-2 rounded-md text-white font-medium bg-blue-500">Login</button>
+                <button onclick="showSignup()" id="signupTab" class="w-full py-2 rounded-md text-gray-400 font-medium">Signup</button>
+            </div>
+        </div>
+
+        <!-- Login Form -->
+        <div id="loginForm" class="bg-neutral-800 rounded-lg p-8 shadow-lg">
+            <div class="mb-8 text-center">
+                <h2 class="text-3xl font-bold text-white mb-2">Welcome Back</h2>
+                <p class="text-gray-400">Login to your MeetAI account</p>
+            </div>
+        
+            <form method="POST" action="{{ url_for('login') }}">
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-gray-300 mb-2">Email Address</label>
+                        <input name="email" type="email" class="w-full px-4 py-3 rounded-lg bg-neutral-700 text-white border border-neutral-600 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none transition-colors" required>
+                    </div>
+        
+                    <div>
+                        <label class="block text-gray-300 mb-2">Password</label>
+                        <input name="password" type="password" class="w-full px-4 py-3 rounded-lg bg-neutral-700 text-white border border-neutral-600 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none transition-colors" required>
+                    </div>
+        
+                    <div class="flex items-center justify-between">
+                        <label class="flex items-center">
+                            <input type="checkbox" name="remember" class="rounded bg-neutral-700 border-neutral-600 text-blue-500 focus:ring-blue-500">
+                            <span class="ml-2 text-gray-400">Remember me</span>
+                        </label>
+                        <a href="#" class="text-blue-500 hover:text-blue-400">Forgot password?</a>
+                    </div>
+        
+                    <button type="submit" class="w-full py-3 px-4 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-lg transition-colors">
+                        Login
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Signup Form -->
+        <div id="signupForm" class="hidden bg-neutral-800 rounded-lg p-8 shadow-lg">
+            <div class="mb-8 text-center">
+                <h2 class="text-3xl font-bold text-white mb-2">Create Account</h2>
+                <p class="text-gray-400">Join MeetAI today</p>
+            </div>
+
+            <form>
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-gray-300 mb-2">Full Name</label>
+                        <input type="text" class="w-full px-4 py-3 rounded-lg bg-neutral-700 text-white border border-neutral-600 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none transition-colors" required>
+                    </div>
+
+                    <div>
+                        <label class="block text-gray-300 mb-2">Email Address</label>
+                        <input type="email" class="w-full px-4 py-3 rounded-lg bg-neutral-700 text-white border border-neutral-600 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none transition-colors" required>
+                    </div>
+
+                    <div>
+                        <label class="block text-gray-300 mb-2">Password</label>
+                        <input type="password" class="w-full px-4 py-3 rounded-lg bg-neutral-700 text-white border border-neutral-600 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none transition-colors" required>
+                    </div>
+
+                    <div>
+                        <label class="block text-gray-300 mb-2">Confirm Password</label>
+                        <input type="password" class="w-full px-4 py-3 rounded-lg bg-neutral-700 text-white border border-neutral-600 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none transition-colors" required>
+                    </div>
+
+                    <button type="submit" class="w-full py-3 px-4 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-lg transition-colors">
+                        Create Account
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function showLogin() {
+            document.getElementById('loginForm').classList.remove('hidden');
+            document.getElementById('signupForm').classList.add('hidden');
+            document.getElementById('loginTab').classList.add('bg-blue-500');
+            document.getElementById('loginTab').classList.remove('text-gray-400');
+            document.getElementById('signupTab').classList.remove('bg-blue-500');
+            document.getElementById('signupTab').classList.add('text-gray-400');
+        }
+
+        function showSignup() {
+            document.getElementById('loginForm').classList.add('hidden');
+            document.getElementById('signupForm').classList.remove('hidden');
+            document.getElementById('signupTab').classList.add('bg-blue-500');
+            document.getElementById('signupTab').classList.remove('text-gray-400');
+            document.getElementById('loginTab').classList.remove('bg-blue-500');
+            document.getElementById('loginTab').classList.add('text-gray-400');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,847 @@
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="description" content="">
+      <meta name="theme-color" content="#ffffff">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="robots" content="">
+      
+      <title>SmartMeet AI - AI-Powered Meeting Assistant for Smarter Collaboration | Automated Meeting Solutions</title>
+      <!-- SEO Description -->
+      <meta name="description" content="Transform your meetings with SmartMeet AI's intelligent meeting assistant. Features include real-time transcription, AI-driven insights, calendar sync, and workflow automation. Try it free today!">
+
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+
+       <link href="{{fontLink}}" rel="stylesheet">
+       <link href="{{secondaryFontLink}}" rel="stylesheet">
+      
+
+      <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+
+
+
+      <!-- Performance optimization: Preload critical resources -->
+      <link rel="preload" href="https://cdn.tailwindcss.com" as="script">
+      
+      
+
+      <!-- Preconnect -->
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+      <!-- Font stylesheet -->
+
+      <script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.8/handlebars.min.js"></script>
+
+      <!-- Core CSS -->
+      <script src="https://cdn.tailwindcss.com"></script>
+      <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        tailwind.config = {
+          theme: {
+            extend: {
+              colors: {
+                primary: {
+                  DEFAULT: '{{settings.colors.primary}}',
+                  50: '#f8f8f8',
+                  100: '#e8e8e8', 
+                  200: '#d3d3d3',
+                  300: '#a3a3a3',
+                  400: '#737373',
+                  500: '#525252',
+                  600: '#404040',
+                  700: '#262626',
+                  800: '#171717',
+                  900: '#0a0a0a',
+                  950: '#030303',
+                },
+                secondary: {
+                  DEFAULT: '{{settings.colors.secondary}}',
+                  50: '#f8f8f8',
+                  100: '#e8e8e8',
+                  200: '#d3d3d3', 
+                  300: '#a3a3a3',
+                  400: '#737373',
+                  500: '#525252',
+                  600: '#404040',
+                  700: '#262626',
+                  800: '#171717',
+                  900: '#0a0a0a',
+                  950: '#030303',
+                },
+                accent: {
+                  DEFAULT: '{{settings.colors.accent}}',
+                  50: '#f8f8f8',
+                  100: '#e8e8e8',
+                  200: '#d3d3d3',
+                  300: '#a3a3a3', 
+                  400: '#737373',
+                  500: '#525252',
+                  600: '#404040',
+                  700: '#262626',
+                  800: '#171717',
+                  900: '#0a0a0a',
+                  950: '#030303',
+                },
+              },
+              fontFamily: {
+                sans: ['Inter, sans-serif', 'Roboto', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+                heading: ['Poppins, sans-serif', 'system-ui', 'sans-serif'],
+                body: ['Poppins, sans-serif', 'system-ui', 'sans-serif'],
+              },
+              spacing: {
+                '18': '4.5rem',
+                '22': '5.5rem',
+                '30': '7.5rem',
+              },
+              maxWidth: {
+                '8xl': '88rem',
+                '9xl': '96rem',
+              },
+              animation: {
+                'fade-in': 'fadeIn 0.5s ease-in',
+                'fade-out': 'fadeOut 0.5s ease-out',
+                'slide-up': 'slideUp 0.5s ease-out',
+                'slide-down': 'slideDown 0.5s ease-out',
+                'slide-left': 'slideLeft 0.5s ease-out',
+                'slide-right': 'slideRight 0.5s ease-out',
+                'scale-in': 'scaleIn 0.5s ease-out',
+                'scale-out': 'scaleOut 0.5s ease-out',
+                'spin-slow': 'spin 3s linear infinite',
+                'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                'bounce-slow': 'bounce 3s infinite',
+                'float': 'float 3s ease-in-out infinite',
+              },
+              keyframes: {
+                fadeIn: {
+                  '0%': { opacity: '0' },
+                  '100%': { opacity: '1' },
+                },
+                fadeOut: {
+                  '0%': { opacity: '1' },
+                  '100%': { opacity: '0' },
+                },
+                slideUp: {
+                  '0%': { transform: 'translateY(20px)', opacity: '0' },
+                  '100%': { transform: 'translateY(0)', opacity: '1' },
+                },
+                slideDown: {
+                  '0%': { transform: 'translateY(-20px)', opacity: '0' },
+                  '100%': { transform: 'translateY(0)', opacity: '1' },
+                },
+                slideLeft: {
+                  '0%': { transform: 'translateX(20px)', opacity: '0' },
+                  '100%': { transform: 'translateX(0)', opacity: '1' },
+                },
+                slideRight: {
+                  '0%': { transform: 'translateX(-20px)', opacity: '0' },
+                  '100%': { transform: 'translateX(0)', opacity: '1' },
+                },
+                scaleIn: {
+                  '0%': { transform: 'scale(0.9)', opacity: '0' },
+                  '100%': { transform: 'scale(1)', opacity: '1' },
+                },
+                scaleOut: {
+                  '0%': { transform: 'scale(1.1)', opacity: '0' },
+                  '100%': { transform: 'scale(1)', opacity: '1' },
+                },
+                float: {
+                  '0%, 100%': { transform: 'translateY(0)' },
+                  '50%': { transform: 'translateY(-10px)' },
+                },
+              },
+              aspectRatio: {
+                'portrait': '3/4',
+                'landscape': '4/3',
+                'ultrawide': '21/9',
+              },
+            },
+          },
+          variants: {
+            extend: {
+              opacity: ['disabled'],
+              cursor: ['disabled'],
+              backgroundColor: ['active', 'disabled'],
+              textColor: ['active', 'disabled'],
+            },
+          },
+        }
+      });
+      </script>
+
+      <!-- Utilities and Components -->
+      <script defer src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.13.3/cdn.min.js"></script>
+      <script defer src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.45.1/apexcharts.min.js"></script>
+      
+      <!-- Optimized Font Loading -->
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      
+      <!-- Icons -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" 
+            integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+      <!-- Dynamic Meta Tags -->
+      <meta name="description" content="">
+      <meta name="keywords" content="">
+      <meta name="robots" content="">
+      <meta name="google-site-verification" content="">
+      <meta name="baidu-verification" content="">
+      <meta name="yandex-verification" content="">
+      <meta name="bing-verification" content="">
+      <meta property="og:title" content="">
+      <meta property="og:description" content="">
+      <meta property="og:image" content="">
+      <meta property="og:type" content="website">
+      <meta property="og:locale" content="en_US">
+      <meta property="og:site_name" content="SmartMeet AI">
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:title" content="">
+      <meta name="twitter:description" content="">
+      <meta name="twitter:image" content="">
+
+      
+      <link rel="icon" type="image/x-icon" href="{{settings.favicon}}">
+      
+      <style>
+        h1, h2, h3, h4, h5, h6 {
+          font-family: Inter, sans-serif, system-ui, sans-serif;
+        }
+        body {
+          font-family: Poppins, sans-serif, system-ui, sans-serif;
+        }
+      </style>
+   </head>
+   <body class="antialiased text-gray-800 min-h-screen flex flex-col">
+      <!-- Skip to main content link for accessibility -->
+      <a href="#main-content" 
+         class="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:z-50 focus:p-4 focus:bg-white focus:text-black">
+         Skip to main content
+      </a>
+
+      <!-- Header -->
+      <header class="relative z-50 bg-white dark:bg-gray-900">
+        <!-- Header content goes here -->
+      </header>
+
+      <!-- Main content area -->
+      <main id="main-content" class="flex-1 relative">
+        <!-- Content will be injected here -->
+      </main>
+
+      
+
+   </body>
+</html>
+<div id="root">
+  <nav id="navbar" class="fixed w-full z-50 bg-neutral-900/95 backdrop-blur-sm border-b border-neutral-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16 items-center">
+        <!-- Logo -->
+        <div class="flex-shrink-0 flex items-center">
+          <span class="text-2xl font-bold text-blue-500">MeetAI</span>
+        </div>
+
+        <!-- Desktop Navigation -->
+        <div class="hidden md:block">
+          <div class="ml-10 flex items-center space-x-4">
+            <a href="/" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
+            <a href="#features" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Features</a>
+            <a href="#workflow" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">How It Works</a>
+            <a href="#testimonials" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Testimonials</a>
+            <a href="#integrations" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Integrations</a>
+            <a href="#faq" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">FAQ</a>
+            <a href="#contact" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Contact</a>
+            <button onclick="window.location.href='/login'" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors ml-4">
+              Get Started Free
+            </button>
+          </div>
+        </div>
+
+        <!-- Mobile menu button -->
+        <div class="md:hidden">
+          <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-neutral-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+            <span class="sr-only">Open main menu</span>
+            <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-neutral-900 border-b border-neutral-800">
+      <div class="px-2 pt-2 pb-3 space-y-1">
+        <a href="/" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
+        <a href="#features" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Features</a>
+        <a href="#workflow" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">How It Works</a>
+        <a href="#testimonials" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Testimonials</a>
+        <a href="#integrations" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Integrations</a>
+        <a href="#faq" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">FAQ</a>
+        <a href="#contact" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Contact</a>
+        <button onclick="window.location.href='/login'" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors ml-4">
+          Get Started Free
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <script>
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    let isMenuOpen = false;
+
+    mobileMenuButton.addEventListener('click', () => {
+      isMenuOpen = !isMenuOpen;
+      if (isMenuOpen) {
+        mobileMenu.classList.remove('hidden');
+        mobileMenu.classList.add('animate__animated', 'animate__fadeIn');
+      } else {
+        mobileMenu.classList.add('animate__animated', 'animate__fadeOut');
+        setTimeout(() => {
+          mobileMenu.classList.add('hidden');
+          mobileMenu.classList.remove('animate__animated', 'animate__fadeOut');
+        }, 500);
+      }
+    });
+
+    // Hide mobile menu on window resize if screen becomes larger
+    window.addEventListener('resize', () => {
+      if (window.innerWidth >= 768) {
+        mobileMenu.classList.add('hidden');
+        isMenuOpen = false;
+      }
+    });
+  </script>
+</div>
+
+<div id="root">
+  <section id="hero" class="min-h-[70vh] bg-neutral-900 pt-16 relative overflow-hidden">
+    <div class="absolute inset-0">
+      <div class="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20 animate__animated animate__fadeIn"></div>
+      <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iZ3JpZCIgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj48cGF0aCBkPSJNIDQwIDAgTCAwIDAgMCA0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMjkyNTI0IiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-10"></div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+      <div class="pt-20 pb-16 text-center">
+        <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 animate__animated animate__fadeInUp">
+          AI-Powered Meeting Assistant for
+          <span class="bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
+            Smarter Collaboration
+          </span>
+        </h1>
+        
+        <p class="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto animate__animated animate__fadeInUp animate__delay-1s">
+          Join meetings automatically, transcribe in real-time, and get actionable insights—effortlessly.
+        </p>
+
+        <div class="flex flex-col sm:flex-row justify-center gap-4 animate__animated animate__fadeInUp animate__delay-2s">
+          <button onclick="window.location.href='/login'" class="px-8 py-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg transition-all transform hover:scale-105 shadow-lg hover:shadow-blue-500/50">
+            Get Started Free
+          </button>
+          <button class="px-8 py-4 bg-neutral-800 hover:bg-neutral-700 text-white font-semibold rounded-lg transition-all transform hover:scale-105">
+            Watch Demo
+          </button>
+        </div>
+
+        <div class="mt-16 flex justify-center">
+          <div class="relative w-full max-w-4xl h-[400px] rounded-lg bg-neutral-800 shadow-2xl overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-t from-neutral-900 to-transparent"></div>
+            <div class="absolute inset-0 flex items-center justify-center">
+              <div class="text-gray-400 text-lg">Dashboard Preview</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-12 flex flex-wrap justify-center gap-8 text-gray-400">
+          <div class="flex items-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+            <span>99.9% Accuracy</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+            <span>Enterprise Security</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+            <span>Real-time Sync</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div id="root">
+  <section id="features" class="py-20 bg-neutral-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 animate__animated animate__fadeIn">
+          Powerful Features for Smarter Meetings
+        </h2>
+        <p class="text-gray-400 text-xl max-w-3xl mx-auto">
+          Everything you need to transform your meetings into actionable insights
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Feature 1 -->
+        <div class="bg-neutral-900 p-6 rounded-xl hover:scale-105 transition-transform duration-300 animate__animated animate__fadeInUp">
+          <div class="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-white mb-3">Real-Time Transcription</h3>
+          <p class="text-gray-400">Live speech-to-text conversion with high accuracy powered by advanced AI algorithms.</p>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="bg-neutral-900 p-6 rounded-xl hover:scale-105 transition-transform duration-300 animate__animated animate__fadeInUp animate__delay-1s">
+          <div class="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-white mb-3">AI-Driven Insights</h3>
+          <p class="text-gray-400">Extract action items, deadlines, and key decisions automatically with smart analysis.</p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="bg-neutral-900 p-6 rounded-xl hover:scale-105 transition-transform duration-300 animate__animated animate__fadeInUp animate__delay-2s">
+          <div class="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-white mb-3">Calendar Sync</h3>
+          <p class="text-gray-400">Seamless integration with Google Calendar & Outlook for automated meeting management.</p>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="bg-neutral-900 p-6 rounded-xl hover:scale-105 transition-transform duration-300 animate__animated animate__fadeInUp">
+          <div class="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-white mb-3">Workflow Automation</h3>
+          <p class="text-gray-400">Push tasks to Slack, Trello, or Jira instantly with automated integrations.</p>
+        </div>
+
+        <!-- Feature 5 -->
+        <div class="bg-neutral-900 p-6 rounded-xl hover:scale-105 transition-transform duration-300 animate__animated animate__fadeInUp animate__delay-1s">
+          <div class="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-white mb-3">Privacy & Security</h3>
+          <p class="text-gray-400">End-to-end encryption with automatic redaction of sensitive data for maximum security.</p>
+        </div>
+
+        <!-- Feature 6 -->
+        <div class="bg-neutral-900 p-6 rounded-xl hover:scale-105 transition-transform duration-300 animate__animated animate__fadeInUp animate__delay-2s">
+          <div class="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-white mb-3">Smart Storage</h3>
+          <p class="text-gray-400">Searchable archive of all your meeting transcripts and insights in one place.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div id="root">
+  <section id="workflow" class="py-20 bg-neutral-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 animate__animated animate__fadeIn">
+          How It Works
+        </h2>
+        <p class="text-gray-400 text-xl max-w-3xl mx-auto">
+          Simple steps to transform your meetings into actionable insights
+        </p>
+      </div>
+
+      <div class="relative">
+        <!-- Connection Lines -->
+        <div class="hidden lg:block absolute top-1/2 left-0 w-full h-1 bg-blue-500/20 -translate-y-1/2"></div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          <!-- Step 1 -->
+          <div class="relative bg-neutral-800 rounded-xl p-6 hover:scale-105 transition-all animate__animated animate__fadeInLeft">
+            <div class="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold">1</div>
+            <div class="mt-8">
+              <div class="w-16 h-16 mx-auto bg-blue-500/20 rounded-xl flex items-center justify-center mb-4">
+                <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <h3 class="text-xl font-semibold text-white text-center mb-3">Sync Your Calendar</h3>
+              <p class="text-gray-400 text-center">Connect Google/Outlook to auto-join meetings</p>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="relative bg-neutral-800 rounded-xl p-6 hover:scale-105 transition-all animate__animated animate__fadeInLeft" style="animation-delay: 0.2s;">
+            <div class="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold">2</div>
+            <div class="mt-8">
+              <div class="w-16 h-16 mx-auto bg-blue-500/20 rounded-xl flex items-center justify-center mb-4">
+                <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                </svg>
+              </div>
+              <h3 class="text-xl font-semibold text-white text-center mb-3">Live Transcription</h3>
+              <p class="text-gray-400 text-center">AI listens, transcribes, and highlights key points</p>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="relative bg-neutral-800 rounded-xl p-6 hover:scale-105 transition-all animate__animated animate__fadeInLeft" style="animation-delay: 0.4s;">
+            <div class="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold">3</div>
+            <div class="mt-8">
+              <div class="w-16 h-16 mx-auto bg-blue-500/20 rounded-xl flex items-center justify-center mb-4">
+                <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+              </div>
+              <h3 class="text-xl font-semibold text-white text-center mb-3">Automate Workflows</h3>
+              <p class="text-gray-400 text-center">Push meeting insights to Slack, Trello, Jira, etc.</p>
+            </div>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="relative bg-neutral-800 rounded-xl p-6 hover:scale-105 transition-all animate__animated animate__fadeInLeft" style="animation-delay: 0.6s;">
+            <div class="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold">4</div>
+            <div class="mt-8">
+              <div class="w-16 h-16 mx-auto bg-blue-500/20 rounded-xl flex items-center justify-center mb-4">
+                <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
+              </div>
+              <h3 class="text-xl font-semibold text-white text-center mb-3">Secure Storage</h3>
+              <p class="text-gray-400 text-center">Encrypted transcripts, searchable in your dashboard</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-16 text-center">
+        <button class="px-8 py-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg transition-all transform hover:scale-105 shadow-lg hover:shadow-blue-500/50 animate__animated animate__fadeInUp">
+          Start Your Journey
+        </button>
+      </div>
+    </div>
+  </section>
+</div>
+<div id="root">
+  <section id="testimonials" class="py-20 bg-neutral-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 animate__animated animate__fadeIn">
+          What Our Users Say
+        </h2>
+        <p class="text-gray-400 text-xl max-w-3xl mx-auto">
+          Join thousands of teams already transforming their meetings
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+        <!-- Testimonial 1 -->
+        <div class="bg-neutral-900 p-8 rounded-xl hover:scale-105 transition-all animate__animated animate__fadeIn">
+          <div class="flex items-center mb-6">
+            <div class="w-16 h-16 bg-neutral-700 rounded-full flex items-center justify-center">
+              <svg class="w-8 h-8 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            <div class="ml-4">
+              <h4 class="text-white font-semibold">John D.</h4>
+              <p class="text-gray-400">Product Manager</p>
+            </div>
+          </div>
+          <p class="text-gray-300 italic">"This tool has transformed how our team collaborates—no more manual note-taking! The AI insights are incredibly accurate."</p>
+        </div>
+
+        <!-- Testimonial 2 -->
+        <div class="bg-neutral-900 p-8 rounded-xl hover:scale-105 transition-all animate__animated animate__fadeIn" style="animation-delay: 0.2s;">
+          <div class="flex items-center mb-6">
+            <div class="w-16 h-16 bg-neutral-700 rounded-full flex items-center justify-center">
+              <svg class="w-8 h-8 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            <div class="ml-4">
+              <h4 class="text-white font-semibold">Sarah M.</h4>
+              <p class="text-gray-400">Team Lead</p>
+            </div>
+          </div>
+          <p class="text-gray-300 italic">"The automated workflow integration saves us hours every week. It's like having a virtual assistant in every meeting."</p>
+        </div>
+
+        <!-- Testimonial 3 -->
+        <div class="bg-neutral-900 p-8 rounded-xl hover:scale-105 transition-all animate__animated animate__fadeIn" style="animation-delay: 0.4s;">
+          <div class="flex items-center mb-6">
+            <div class="w-16 h-16 bg-neutral-700 rounded-full flex items-center justify-center">
+              <svg class="w-8 h-8 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            <div class="ml-4">
+              <h4 class="text-white font-semibold">Alex K.</h4>
+              <p class="text-gray-400">Engineering Director</p>
+            </div>
+          </div>
+          <p class="text-gray-300 italic">"The security features give us peace of mind, and the transcription accuracy is impressive. A game-changer for remote teams."</p>
+        </div>
+      </div>
+
+      <!-- Trusted By Section -->
+      <div class="text-center">
+        <h3 class="text-lg text-gray-400 mb-8">Trusted by teams at</h3>
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-8 items-center justify-items-center">
+          <div class="w-32 h-12 bg-neutral-900 rounded flex items-center justify-center">
+            <div class="text-gray-500 font-semibold">Company 1</div>
+          </div>
+          <div class="w-32 h-12 bg-neutral-900 rounded flex items-center justify-center">
+            <div class="text-gray-500 font-semibold">Company 2</div>
+          </div>
+          <div class="w-32 h-12 bg-neutral-900 rounded flex items-center justify-center">
+            <div class="text-gray-500 font-semibold">Company 3</div>
+          </div>
+          <div class="w-32 h-12 bg-neutral-900 rounded flex items-center justify-center">
+            <div class="text-gray-500 font-semibold">Company 4</div>
+          </div>
+          <div class="w-32 h-12 bg-neutral-900 rounded flex items-center justify-center">
+            <div class="text-gray-500 font-semibold">Company 5</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div><div id="root">
+  <section id="integrations" class="py-20 bg-neutral-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 animate__animated animate__fadeIn">
+          Seamless Integrations
+        </h2>
+        <p class="text-gray-400 text-xl max-w-3xl mx-auto">
+          Connect effortlessly with the tools you already use
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-8 mb-16">
+        <!-- Zoom -->
+        <div class="bg-neutral-800 p-6 rounded-xl hover:scale-105 transition-all animate__animated animate__fadeInUp">
+          <div class="w-full h-24 flex items-center justify-center">
+            <div class="w-16 h-16 bg-blue-500/20 rounded-xl flex items-center justify-center">
+              <svg class="w-10 h-10 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+              </svg>
+            </div>
+          </div>
+          <p class="text-center text-white font-medium">Zoom</p>
+        </div>
+
+        <!-- Teams -->
+        <div class="bg-neutral-800 p-6 rounded-xl hover:scale-105 transition-all animate__animated animate__fadeInUp" style="animation-delay: 0.1s;">
+          <div class="w-full h-24 flex items-center justify-center">
+            <div class="w-16 h-16 bg-purple-500/20 rounded-xl flex items-center justify-center">
+              <svg class="w-10 h-10 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+            </div>
+          </div>
+          <p class="text-center text-white font-medium">Teams</p>
+        </div>
+
+        <!-- Slack -->
+        <div class="bg-neutral-800 p-6 rounded-xl hover:scale-105 transition-all animate__animated animate__fadeInUp" style="animation-delay: 0.2s;">
+          <div class="w-full h-24 flex items-center justify-center">
+            <div class="w-16 h-16 bg-green-500/20 rounded-xl flex items-center justify-center">
+              <svg class="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+              </svg>
+            </div>
+          </div>
+          <p class="text-center text-white font-medium">Slack</p>
+        </div>
+
+        <!-- Trello -->
+        <div class="bg-neutral-800 p-6 rounded-xl hover:scale-105 transition-all animate__animated animate__fadeInUp" style="animation-delay: 0.3s;">
+          <div class="w-full h-24 flex items-center justify-center">
+            <div class="w-16 h-16 bg-orange-500/20 rounded-xl flex items-center justify-center">
+              <svg class="w-10 h-10 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+              </svg>
+            </div>
+          </div>
+          <p class="text-center text-white font-medium">Trello</p>
+        </div>
+
+        <!-- Jira -->
+        <div class="bg-neutral-800 p-6 rounded-xl hover:scale-105 transition-all animate__animated animate__fadeInUp" style="animation-delay: 0.4s;">
+          <div class="w-full h-24 flex items-center justify-center">
+            <div class="w-16 h-16 bg-red-500/20 rounded-xl flex items-center justify-center">
+              <svg class="w-10 h-10 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              </svg>
+            </div>
+          </div>
+          <p class="text-center text-white font-medium">Jira</p>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <button class="px-8 py-4 bg-neutral-800 hover:bg-neutral-700 text-white font-semibold rounded-lg transition-all transform hover:scale-105 animate__animated animate__fadeInUp">
+          View All Integrations
+        </button>
+      </div>
+    </div>
+  </section>
+</div><div id="root">
+  <section id="faq" class="py-20 bg-neutral-800">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 animate__animated animate__fadeIn">
+          Frequently Asked Questions
+        </h2>
+        <p class="text-gray-400 text-xl">
+          Everything you need to know about our platform
+        </p>
+      </div>
+
+      <div class="space-y-4">
+        <!-- FAQ Item 1 -->
+        <div class="faq-item bg-neutral-900 rounded-lg animate__animated animate__fadeInUp">
+          <button class="w-full px-6 py-4 flex items-center justify-between text-left">
+            <span class="text-lg font-semibold text-white">How accurate is the AI transcription?</span>
+            <svg class="w-6 h-6 text-gray-400 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-4">
+            <p class="text-gray-400">Our AI transcription service achieves over 95% accuracy across multiple accents and languages. The system continuously learns and improves through machine learning, ensuring high-quality transcriptions for all your meetings.</p>
+          </div>
+        </div>
+
+        <!-- FAQ Item 2 -->
+        <div class="faq-item bg-neutral-900 rounded-lg animate__animated animate__fadeInUp" style="animation-delay: 0.1s;">
+          <button class="w-full px-6 py-4 flex items-center justify-between text-left">
+            <span class="text-lg font-semibold text-white">Can I export my meeting summaries?</span>
+            <svg class="w-6 h-6 text-gray-400 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-4">
+            <p class="text-gray-400">Yes, you can export meeting summaries in multiple formats including PDF, DOC, and markdown. You can also directly integrate with your preferred project management tools for automatic exports.</p>
+          </div>
+        </div>
+
+        <!-- FAQ Item 3 -->
+        <div class="faq-item bg-neutral-900 rounded-lg animate__animated animate__fadeInUp" style="animation-delay: 0.2s;">
+          <button class="w-full px-6 py-4 flex items-center justify-between text-left">
+            <span class="text-lg font-semibold text-white">Does this work with all video conferencing platforms?</span>
+            <svg class="w-6 h-6 text-gray-400 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-4">
+            <p class="text-gray-400">We support all major video conferencing platforms including Zoom, Microsoft Teams, Google Meet, and more. Our platform seamlessly integrates with your existing workflow.</p>
+          </div>
+        </div>
+
+        <!-- FAQ Item 4 -->
+        <div class="faq-item bg-neutral-900 rounded-lg animate__animated animate__fadeInUp" style="animation-delay: 0.3s;">
+          <button class="w-full px-6 py-4 flex items-center justify-between text-left">
+            <span class="text-lg font-semibold text-white">How secure is my data?</span>
+            <svg class="w-6 h-6 text-gray-400 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-4">
+            <p class="text-gray-400">We implement enterprise-grade security with end-to-end encryption. Your data is stored in secure, SOC 2 compliant servers with automatic backup and disaster recovery systems in place.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-12 text-center">
+        <a href="#" class="text-blue-400 hover:text-blue-300 flex items-center justify-center gap-2 transition-colors">
+          <span>Visit our Help Center for more answers</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <script>
+      document.querySelectorAll('.faq-item button').forEach(button => {
+        button.addEventListener('click', () => {
+          const content = button.nextElementSibling;
+          const icon = button.querySelector('svg');
+          
+          // Toggle content
+          content.classList.toggle('hidden');
+          
+          // Rotate icon
+          icon.style.transform = content.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
+          
+          // Add smooth transition
+          content.style.maxHeight = content.classList.contains('hidden') ? '0' : content.scrollHeight + 'px';
+        });
+      });
+    </script>
+  </section>
+</div>
+<footer class="footer">
+    <style>
+        .footer {
+            background: black;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            font-family: inherit;
+        }
+        .footer a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        .social-icons {
+            margin-top: 10px;
+        }
+    </style>
+    <p>&copy; 2025 MeetAI. All Rights Reserved.</p>
+    <p>Contact: <a href="mailto:contact@meetai.com">contact@meetai.com</a> | Phone: +1 234 567 890</p>
+    <div class="social-icons">
+        <a href="#">Facebook</a> |
+        <a href="#">Twitter</a> |
+        <a href="#">LinkedIn</a> |
+        <a href="#">Instagram</a>
+    </div>
+</footer>

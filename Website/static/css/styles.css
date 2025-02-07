@@ -1,0 +1,12 @@
+/* Custom styles */
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter', sans-serif, system-ui, sans-serif;
+  }
+  
+  body {
+    font-family: 'SF Pro Display', sans-serif, system-ui, sans-serif;
+  }
+  
+  /* Add any additional custom styles here */
+  

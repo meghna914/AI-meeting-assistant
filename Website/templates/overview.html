@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MeetAI Dashboard - Overview</title>
+    <meta name="description" content="Overview of your meetings and activities." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+  </head>
+  <body class="antialiased text-gray-800 min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="relative z-50 bg-white dark:bg-gray-900">
+      <div class="p-4">
+        <h1 class="text-2xl font-bold">MeetAI Dashboard</h1>
+      </div>
+    </header>
+    <div id="root" class="flex h-screen overflow-hidden">
+      <!-- Sidebar Navigation -->
+      <nav class="hidden lg:flex flex-col w-64 bg-white border-r border-neutral-200/20">
+        <div class="p-4 border-b border-neutral-200/20">
+          <div class="text-2xl font-bold text-neutral-800">MeetAI</div>
+        </div>
+        <div class="flex-1 overflow-y-auto">
+          <div class="px-2 py-4 space-y-1">
+            <a href="{{ url_for('overview') }}" class="flex items-center px-4 py-2 text-neutral-700 bg-neutral-100">
+              Overview
+            </a>
+            <a href="{{ url_for('meetings') }}" class="flex items-center px-4 py-2 text-neutral-600 hover:bg-neutral-100 transition-colors">
+              Meetings
+            </a>
+            <a href="{{ url_for('recordings') }}" class="flex items-center px-4 py-2 text-neutral-600 hover:bg-neutral-100 transition-colors">
+              Recordings
+            </a>
+            <a href="{{ url_for('tasks') }}" class="flex items-center px-4 py-2 text-neutral-600 hover:bg-neutral-100 transition-colors">
+              Tasks
+            </a>
+            <a href="{{ url_for('decisions') }}" class="flex items-center px-4 py-2 text-neutral-600 hover:bg-neutral-100 transition-colors">
+              Decisions
+            </a>
+            <a href="{{ url_for('analytics') }}" class="flex items-center px-4 py-2 text-neutral-600 hover:bg-neutral-100 transition-colors">
+              Analytics
+            </a>
+            <a href="{{ url_for('settings_page') }}" class="flex items-center px-4 py-2 text-neutral-600 hover:bg-neutral-100 transition-colors">
+              Settings
+            </a>
+          </div>
+        </div>
+        <div class="p-4 border-t border-neutral-200/20">
+          <div class="flex items-center">
+            <div class="flex-shrink-0">
+              <div class="w-8 h-8 rounded-full bg-neutral-200"></div>
+            </div>
+            <div class="ml-3">
+              <p class="text-sm font-medium text-neutral-700">John Doe</p>
+              <p class="text-xs text-neutral-500">john@example.com</p>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <!-- Main Content Area -->
+      <main class="flex-1 overflow-y-auto bg-[#E5E7EB] p-6">
+        <!-- Overview Content -->
+        <header class="flex justify-between items-center mb-8">
+          <h1 class="text-2xl font-bold text-neutral-800">Overview</h1>
+          <div class="flex items-center space-x-4">
+            <div class="relative">
+              <input
+                type="text"
+                placeholder="Search..."
+                class="pl-10 pr-4 py-2 rounded-lg border border-neutral-200/20 bg-white focus:outline-none focus:border-neutral-300"
+              />
+              <svg
+                class="absolute left-3 top-2.5 h-5 w-5 text-neutral-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
+            </div>
+          </div>
+        </header>
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div class="bg-white p-6 rounded-lg border border-neutral-200/20">
+            <div class="flex items-center justify-between">
+              <h3 class="text-neutral-500">Total Meetings</h3>
+              <svg
+                class="w-6 h-6 text-blue-500"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                ></path>
+              </svg>
+            </div>
+            <p class="text-3xl font-bold text-neutral-800 mt-2">124</p>
+            <p class="text-sm text-green-500 mt-2">↑ 12% from last month</p>
+          </div>
+          <div class="bg-white p-6 rounded-lg border border-neutral-200/20">
+            <div class="flex items-center justify-between">
+              <h3 class="text-neutral-500">Tasks Completed</h3>
+              <svg
+                class="w-6 h-6 text-green-500"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+                ></path>
+              </svg>
+            </div>
+            <p class="text-3xl font-bold text-neutral-800 mt-2">85</p>
+            <p class="text-sm text-green-500 mt-2">↑ 8% from last month</p>
+          </div>
+          <div class="bg-white p-6 rounded-lg border border-neutral-200/20">
+            <div class="flex items-center justify-between">
+              <h3 class="text-neutral-500">Pending Decisions</h3>
+              <svg
+                class="w-6 h-6 text-yellow-500"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                ></path>
+              </svg>
+            </div>
+            <p class="text-3xl font-bold text-neutral-800 mt-2">12</p>
+            <p class="text-sm text-red-500 mt-2">↑ 3 new today</p>
+          </div>
+          <div class="bg-white p-6 rounded-lg border border-neutral-200/20">
+            <div class="flex items-center justify-between">
+              <h3 class="text-neutral-500">Time Saved</h3>
+              <svg
+                class="w-6 h-6 text-purple-500"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                ></path>
+              </svg>
+            </div>
+            <p class="text-3xl font-bold text-neutral-800 mt-2">48h</p>
+            <p class="text-sm text-green-500 mt-2">↑ 15% efficiency gain</p>
+          </div>
+        </div>
+        <!-- Today's Schedule -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2">
+            <div class="bg-white rounded-lg border border-neutral-200/20 p-6">
+              <h2 class="text-lg font-semibold text-neutral-800 mb-4">Today's Schedule</h2>
+              <div class="space-y-4">
+                <div class="flex items-center p-4 bg-blue-50 rounded-lg border border-blue-100">
+                  <div class="flex-shrink-0 w-2 h-2 bg-blue-500 rounded-full"></div>
+                  <div class="ml-4">
+                    <p class="font-medium text-neutral-800">Team Weekly Sync</p>
+                    <p class="text-sm text-neutral-500">10:00 AM - 11:00 AM</p>
+                  </div>
+                  <button class="ml-auto px-4 py-2 text-sm text-blue-600 hover:bg-blue-100 rounded-lg transition-colors">Join</button>
+                </div>
+                <div class="flex items-center p-4 bg-purple-50 rounded-lg border border-purple-100">
+                  <div class="flex-shrink-0 w-2 h-2 bg-purple-500 rounded-full"></div>
+                  <div class="ml-4">
+                    <p class="font-medium text-neutral-800">Product Review</p>
+                    <p class="text-sm text-neutral-500">2:00 PM - 3:30 PM</p>
+                  </div>
+                  <button class="ml-auto px-4 py-2 text-sm text-purple-600 hover:bg-purple-100 rounded-lg transition-colors">Join</button>
+                </div>
+                <div class="flex items-center p-4 bg-green-50 rounded-lg border border-green-100">
+                  <div class="flex-shrink-0 w-2 h-2 bg-green-500 rounded-full"></div>
+                  <div class="ml-4">
+                    <p class="font-medium text-neutral-800">Client Meeting</p>
+                    <p class="text-sm text-neutral-500">4:00 PM - 5:00 PM</p>
+                  </div>
+                  <button class="ml-auto px-4 py-2 text-sm text-green-600 hover:bg-green-100 rounded-lg transition-colors">Join</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Recent Activity -->
+          <div class="bg-white rounded-lg border border-neutral-200/20 p-6">
+            <h2 class="text-lg font-semibold text-neutral-800 mb-4">Recent Activity</h2>
+            <div class="space-y-4">
+              <div class="flex items-start">
+                <div class="flex-shrink-0 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                  <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                  </svg>
+                </div>
+                <div class="ml-3">
+                  <p class="text-sm text-neutral-800">New task added: "Update documentation"</p>
+                  <p class="text-xs text-neutral-500">2 minutes ago</p>
+                </div>
+              </div>
+              <div class="flex items-start">
+                <div class="flex-shrink-0 w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                  <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                </div>
+                <div class="ml-3">
+                  <p class="text-sm text-neutral-800">Meeting summary generated</p>
+                  <p class="text-xs text-neutral-500">15 minutes ago</p>
+                </div>
+              </div>
+              <div class="flex items-start">
+                <div class="flex-shrink-0 w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center">
+                  <svg class="w-4 h-4 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                  </svg>
+                </div>
+                <div class="ml-3">
+                  <p class="text-sm text-neutral-800">Decision required: "Q4 Planning"</p>
+                  <p class="text-xs text-neutral-500">1 hour ago</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+    <!-- Custom JavaScript -->
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+  </body>
+</html>
