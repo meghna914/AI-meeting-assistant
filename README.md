@@ -56,147 +56,66 @@ Each server runs on a different port and has its own setup requirements.
 ├── package.json             # Node.js dependencies for Node servers
 ```
 
-Setup Instructions
-1. Clone the Repository
-bash
-Copy
-git clone https://github.com/yourusername/MeetAI.git
-cd MeetAI
-2. Python Environment Setup (For Python Flask Frontend and Bot Server)
-Create a Virtual Environment:
+# MeetAI Setup and Installation Guide
 
-bash
-Copy
-python3 -m venv venv
-Activate the Virtual Environment:
+## Overview
 
-Linux/Mac:
+MeetAI is a powerful meeting assistant solution consisting of four servers working together:
 
-bash
-Copy
-source venv/bin/activate
-Windows:
+1. **Frontend Server:**
+   - This server serves the main user interface of MeetAI.
+   
+2. **Python Flask Frontend Server:**
+   - A Flask-based backend that handles API requests, such as fetching Google Calendar events, and serves frontend content.
+   - **Default Port:** 8080
 
-bash
-Copy
-venv\Scripts\activate
-Install Python Dependencies:
+3. **Node Server for LLM Transcribing:**
+   - A Node.js server that performs transcribing tasks using a Large Language Model (LLM).
+   - **Default Port:** (Check your Node server configuration; e.g., `3000` or `5000`)
 
-bash
-Copy
-pip install -r requirements.txt
-Ensure that your requirements.txt includes packages such as:
+4. **Bot Server:**
+   - A server responsible for automating meeting tasks, such as joining Microsoft Teams meetings, recording audio, transcribing the meeting, and storing meeting details in MongoDB.
+   - **Default Port:** (Configured separately, e.g., `8081`)
 
-Flask
-selenium
-webdriver-manager
-google-api-python-client
-pymongo
-3. Node.js Environment Setup (For Node Transcribe Server and Frontend Server)
-Navigate to the Node server directory:
+Each server operates on a different port and has its own unique setup requirements.
 
-bash
-Copy
-cd node_transcribe_server
-Install Node Dependencies:
+## Prerequisites
 
-bash
-Copy
-npm install
-Repeat similar steps for the frontend_server if it is a Node-based server:
+Before proceeding with the installation, ensure that you have the following tools and software installed:
 
-bash
-Copy
-cd ../frontend_server
-npm install
-4. Configuration
-Google OAuth Token:
-Place your token.json file at the hardcoded path:
-/home/yash/Desktop/code/repo/AI-meeting-assistant/apiendpoint/frontend_server/token.json
-This file should contain your Google OAuth token object (access token, refresh token, etc.).
+- **Git:** Version control software.
+  - [Download Git](https://git-scm.com/)
 
-MongoDB Connection:
-The MongoDB connection string is hardcoded in the Python code. Verify and update it if necessary.
+- **Python 3.8+:** Programming language required for the backend Flask server.
+  - [Download Python](https://www.python.org/downloads/)
 
-Default Teams Parameters:
-The bot server automatically appends default Microsoft Teams parameters to any meeting link to bypass browser alerts.
+- **Node.js and npm:** Required for the Node.js servers (LLM Transcribing & Frontend Server).
+  - [Download Node.js](https://nodejs.org/)
 
-Ports:
+- **MongoDB Atlas Account** or **local MongoDB instance:** For storing meeting-related data.
+  - [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) or install MongoDB locally [here](https://www.mongodb.com/try/download/community).
 
-Python Flask frontend server runs on port 8080.
-Adjust the Node server and bot server port settings in their respective code/configuration files if needed.
-5. Starting the Servers
-Python Flask Frontend Server
-Navigate to the Python server directory (if separate) or from the project root, then run:
+- **FFmpeg:** For handling video/audio tasks.
+  - **Ubuntu/Debian:**
+    ```bash
+    sudo apt-get install ffmpeg
+    ```
+  - **Windows:**
+    [Download FFmpeg](https://ffmpeg.org/download.html) and add it to your system’s PATH.
 
-bash
-Copy
-python app.py
-This will start the Flask server on port 8080 (as configured in the code).
+- **Google Chrome:** Required for Selenium automation tasks.
+  - [Download Google Chrome](https://www.google.com/chrome/)
 
-Bot Server
-If your bot server is a separate Flask application (or part of the Python server), start it similarly:
+- **ChromeDriver:** Managed automatically through `webdriver-manager` used by Selenium.
 
-bash
-Copy
-python bot_app.py
-(Ensure its port is configured appropriately, e.g., 8081.)
+## Architecture Diagram
 
-Node Transcription Server
-Navigate to the Node server directory and start it:
+![Architecture Diagram](path/to/your/architecture-diagram.png)
 
-bash
-Copy
-cd node_transcribe_server
-npm start
-This will start the Node server on its configured port (e.g., 3000 or 5000).
+## Project Structure
 
-Frontend Server
-If your frontend server is Node-based or serves static files, navigate to its directory and run:
+The project follows a modular structure with each component residing in its own directory:
 
-bash
-Copy
-cd frontend_server
-npm start
-Alternatively, you can serve static files using a static file server (e.g., npx serve .).
-
-Testing the Setup
-1. Test the Google Calendar API
-Via Browser:
-Open your browser and navigate to:
-http://localhost:8080/api/calendar
-
-Via curl:
-
-bash
-Copy
-curl http://localhost:8080/api/calendar
-This should return a JSON array of your upcoming Google Calendar events.
-
-2. Test the Meeting Processing API
-Use a tool like Postman or curl to send a POST request to the meeting API endpoint.
-
-Example using curl:
-
-bash
-Copy
-curl -X POST http://localhost:8080/api/meeting \
-     -H "Content-Type: application/json" \
-     -d '{"meeting_link": "https://teams.live.com/v2/#/meet/your-meeting-link"}'
-The bot will join the meeting (with default parameters appended), record a short audio snippet, generate stubbed transcript and summary data, and store the details in MongoDB. The response will include the meeting ID, transcript, and summary.
-
-3. Test the Node Transcription Server
-Follow the API documentation provided in the Node server (if available) to test its endpoints.
-
-4. Test the Frontend
-Access your frontend via the URL configured (e.g., http://localhost:3000).
-
-Additional Notes
-FFmpeg:
-Ensure that FFmpeg is installed and available in your system’s PATH.
-
-Selenium and ChromeDriver:
-The bot server uses Selenium with webdriver-manager to handle ChromeDriver automatically. Ensure your Chrome browser is up-to-date.
 
 Virtual Environment:
 Always activate your Python virtual environment before running Python-based servers.
