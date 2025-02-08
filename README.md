@@ -37,6 +37,10 @@ Each server runs on a different port and has its own setup requirements.
 
 ---
 
+##architecture diagram 
+![Diagram](https://github.com/user-attachments/assets/10c7097d-eb9c-439b-8274-062d18cfffa8)
+
+
 ## Project Structure
 
 ```
