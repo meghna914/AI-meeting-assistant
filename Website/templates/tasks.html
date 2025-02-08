@@ -41,84 +41,59 @@
     <div class="bg-white rounded-lg border border-neutral-200/20 p-4">
         <div class="flex justify-between items-center mb-4">
             <h2 class="font-semibold text-neutral-800">To Do</h2>
-            <span class="px-3 py-1 text-sm bg-neutral-100 text-neutral-600 rounded-full">4</span>
+            <span class="px-3 py-1 text-sm bg-neutral-100 text-neutral-600 rounded-full task-count">{{ todo_tasks|length }}</span>
         </div>
-        <div class="space-y-4">
-            <div class="bg-white rounded-lg border border-neutral-200/20 p-4 cursor-pointer hover:shadow-sm transition-shadow">
-                <div class="flex justify-between items-start mb-2">
-                    <h3 class="font-medium text-neutral-800">Update documentation</h3>
-                    <span class="px-2 py-1 text-xs bg-red-100 text-red-600 rounded-full">High</span>
-                </div>
-                <p class="text-sm text-neutral-600 mb-3">Review and update API documentation with new endpoints</p>
-                <div class="flex justify-between items-center">
-                    <div class="flex items-center gap-2">
-                        <div class="w-6 h-6 rounded-full bg-blue-100"></div>
-                        <span class="text-sm text-neutral-500">John Doe</span>
-                    </div>
-                    <span class="text-sm text-neutral-500">Due Sep 20</span>
-                </div>
-            </div>
-            <div class="bg-white rounded-lg border border-neutral-200/20 p-4 cursor-pointer hover:shadow-sm transition-shadow">
-                <div class="flex justify-between items-start mb-2">
-                    <h3 class="font-medium text-neutral-800">Prepare presentation</h3>
-                    <span class="px-2 py-1 text-xs bg-yellow-100 text-yellow-600 rounded-full">Medium</span>
-                </div>
-                <p class="text-sm text-neutral-600 mb-3">Create slides for client meeting</p>
-                <div class="flex justify-between items-center">
-                    <div class="flex items-center gap-2">
-                        <div class="w-6 h-6 rounded-full bg-green-100"></div>
-                        <span class="text-sm text-neutral-500">Jane Smith</span>
-                    </div>
-                    <span class="text-sm text-neutral-500">Due Sep 22</span>
-                </div>
-            </div>
+        <div class="space-y-4 min-h-[200px] task-column" 
+             id="todo-column"
+             ondrop="drop(event, 'todo')"
+             ondragover="allowDrop(event)">
+            {% for task in todo_tasks %}
+                {% include 'task_card.html' %}
+            {% endfor %}
         </div>
     </div>
+
     <!-- In Progress Column -->
     <div class="bg-white rounded-lg border border-neutral-200/20 p-4">
         <div class="flex justify-between items-center mb-4">
             <h2 class="font-semibold text-neutral-800">In Progress</h2>
-            <span class="px-3 py-1 text-sm bg-neutral-100 text-neutral-600 rounded-full">3</span>
+            <span class="px-3 py-1 text-sm bg-neutral-100 text-neutral-600 rounded-full task-count">{{ in_progress_tasks|length }}</span>
         </div>
-        <div class="space-y-4">
-            <div class="bg-white rounded-lg border border-neutral-200/20 p-4 cursor-pointer hover:shadow-sm transition-shadow">
-                <div class="flex justify-between items-start mb-2">
-                    <h3 class="font-medium text-neutral-800">Implement API changes</h3>
-                    <span class="px-2 py-1 text-xs bg-red-100 text-red-600 rounded-full">High</span>
-                </div>
-                <p class="text-sm text-neutral-600 mb-3">Update backend endpoints for new features</p>
-                <div class="flex justify-between items-center">
-                    <div class="flex items-center gap-2">
-                        <div class="w-6 h-6 rounded-full bg-purple-100"></div>
-                        <span class="text-sm text-neutral-500">Mike Johnson</span>
-                    </div>
-                    <span class="text-sm text-neutral-500">Due Sep 21</span>
-                </div>
-            </div>
+        <div class="space-y-4 min-h-[200px] task-column" 
+             id="in-progress-column"
+             ondrop="drop(event, 'in_progress')"
+             ondragover="allowDrop(event)">
+            {% for task in in_progress_tasks %}
+                {% include 'task_card.html' %}
+            {% endfor %}
         </div>
     </div>
+
     <!-- Completed Column -->
     <div class="bg-white rounded-lg border border-neutral-200/20 p-4">
         <div class="flex justify-between items-center mb-4">
             <h2 class="font-semibold text-neutral-800">Completed</h2>
-            <span class="px-3 py-1 text-sm bg-neutral-100 text-neutral-600 rounded-full">2</span>
+            <span class="px-3 py-1 text-sm bg-neutral-100 text-neutral-600 rounded-full task-count">{{ completed_tasks|length }}</span>
         </div>
-        <div class="space-y-4">
-            <div class="bg-white rounded-lg border border-neutral-200/20 p-4 cursor-pointer hover:shadow-sm transition-shadow opacity-75">
-                <div class="flex justify-between items-start mb-2">
-                    <h3 class="font-medium text-neutral-800">Code review</h3>
-                    <span class="px-2 py-1 text-xs bg-green-100 text-green-600 rounded-full">Done</span>
-                </div>
-                <p class="text-sm text-neutral-600 mb-3">Review pull requests for frontend changes</p>
-                <div class="flex justify-between items-center">
-                    <div class="flex items-center gap-2">
-                        <div class="w-6 h-6 rounded-full bg-indigo-100"></div>
-                        <span class="text-sm text-neutral-500">Sarah Wilson</span>
-                    </div>
-                    <span class="text-sm text-neutral-500">Completed Sep 18</span>
-                </div>
-            </div>
+        <div class="space-y-4 min-h-[200px] task-column" 
+             id="completed-column"
+             ondrop="drop(event, 'completed')"
+             ondragover="allowDrop(event)">
+            {% for task in completed_tasks %}
+                {% include 'task_card.html' %}
+            {% endfor %}
         </div>
     </div>
 </div>
+
+<style>
+    .task-column {
+        min-height: 200px;
+        padding: 1rem;
+        transition: background-color 0.2s;
+    }
+    .task-column.drag-over {
+        background-color: rgba(59, 130, 246, 0.1);
+    }
+</style>
 {% endblock %}

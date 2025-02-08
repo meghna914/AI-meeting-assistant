@@ -204,3 +204,73 @@ function escapeHtml(unsafe) {
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
 }
+
+// Update the drag and drop functions
+function allowDrop(ev) {
+    ev.preventDefault();
+}
+
+function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+    ev.dataTransfer.setData("status", ev.target.dataset.status);
+}
+
+function drop(ev, newStatus) {
+    ev.preventDefault();
+    const taskId = ev.dataTransfer.getData("text");
+    const oldStatus = ev.dataTransfer.getData("status");
+    const taskElement = document.getElementById(taskId);
+    
+    if (!taskElement) return;
+    
+    // Get the drop target (column)
+    const column = document.getElementById(`${newStatus}-column`);
+    if (!column) return;
+
+    // Update the task's status in the UI
+    taskElement.dataset.status = newStatus;
+    
+    // Move the task to the new column
+    column.appendChild(taskElement);
+    
+    // Update task count badges
+    updateColumnCounts();
+    
+    // Update status in backend
+    updateTaskStatus(taskId.replace('task-', ''), newStatus);
+}
+
+function updateColumnCounts() {
+    const columns = ['todo', 'in_progress', 'completed'];
+    columns.forEach(status => {
+        const column = document.getElementById(`${status}-column`);
+        const count = column.getElementsByClassName('task-card').length;
+        const badge = column.parentElement.querySelector('.task-count');
+        if (badge) {
+            badge.textContent = count;
+        }
+    });
+}
+
+function updateTaskStatus(taskId, newStatus) {
+    fetch('/update-task-status', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            taskId: taskId,
+            newStatus: newStatus
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (!data.success) {
+            console.error('Failed to update task status');
+            // Optionally revert the UI change here
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}

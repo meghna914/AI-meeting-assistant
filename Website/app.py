@@ -215,7 +215,55 @@ def decisions():
 @app.route('/tasks')
 @login_required
 def tasks():
-    return render_template('tasks.html', user=session.get('user'))
+    user_email = session.get('user')['email']
+    # Get user data first
+    user_data = users_collection.find_one({"email": user_email})
+    
+    # Get all tasks from meetings
+    user_tasks = []
+    user_meetings = meetings_collection.find({
+        "meeting_id": {"$in": user_data.get("meetings", [])}
+    })
+    
+    for meeting in user_meetings:
+        if meeting.get('meeting_tasks'):
+            for task in meeting.get('meeting_tasks'):
+                user_tasks.append({
+                    'id': str(ObjectId()),  # Generate unique ID for each task
+                    'description': task,
+                    'status': 'todo',  # Default status
+                    'priority': 'medium',  # Default priority
+                    'due_date': meeting['meeting_time'] + timedelta(days=7),  # Example due date
+                    'meeting_name': meeting['meeting_name'],
+                    'assigned_to': user_email
+                })
+    
+    # Group tasks by status
+    todo_tasks = [task for task in user_tasks if task['status'] == 'todo']
+    in_progress_tasks = [task for task in user_tasks if task['status'] == 'in_progress']
+    completed_tasks = [task for task in user_tasks if task['status'] == 'completed']
+    
+    return render_template(
+        'tasks.html',
+        todo_tasks=todo_tasks,
+        in_progress_tasks=in_progress_tasks,
+        completed_tasks=completed_tasks
+    )
+
+@app.route('/update-task-status', methods=['POST'])
+@login_required
+def update_task_status():
+    data = request.json
+    task_id = data.get('taskId')
+    new_status = data.get('newStatus')
+    
+    # Update task status in database
+    meetings_collection.update_one(
+        {"meeting_tasks.id": task_id},
+        {"$set": {"meeting_tasks.$.status": new_status}}
+    )
+    
+    return jsonify({'success': True})
 
 @app.route('/settings')
 @login_required
