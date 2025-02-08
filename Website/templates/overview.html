@@ -115,74 +115,59 @@
 </div>
 <!-- Today's Schedule -->
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- Today's Schedule Section -->
     <div class="lg:col-span-2">
         <div class="bg-white rounded-lg border border-neutral-200/20 p-6">
             <h2 class="text-lg font-semibold text-neutral-800 mb-4">Today's Schedule</h2>
             <div class="space-y-4">
-                <div class="flex items-center p-4 bg-blue-50 rounded-lg border border-blue-100">
-                    <div class="flex-shrink-0 w-2 h-2 bg-blue-500 rounded-full"></div>
-                    <div class="ml-4">
-                        <p class="font-medium text-neutral-800">Team Weekly Sync</p>
-                        <p class="text-sm text-neutral-500">10:00 AM - 11:00 AM</p>
-                    </div>
-                    <button class="ml-auto px-4 py-2 text-sm text-blue-600 hover:bg-blue-100 rounded-lg transition-colors">Join</button>
-                </div>
-                <div class="flex items-center p-4 bg-purple-50 rounded-lg border border-purple-100">
-                    <div class="flex-shrink-0 w-2 h-2 bg-purple-500 rounded-full"></div>
-                    <div class="ml-4">
-                        <p class="font-medium text-neutral-800">Product Review</p>
-                        <p class="text-sm text-neutral-500">2:00 PM - 3:30 PM</p>
-                    </div>
-                    <button class="ml-auto px-4 py-2 text-sm text-purple-600 hover:bg-purple-100 rounded-lg transition-colors">Join</button>
-                </div>
-                <div class="flex items-center p-4 bg-green-50 rounded-lg border border-green-100">
-                    <div class="flex-shrink-0 w-2 h-2 bg-green-500 rounded-full"></div>
-                    <div class="ml-4">
-                        <p class="font-medium text-neutral-800">Client Meeting</p>
-                        <p class="text-sm text-neutral-500">4:00 PM - 5:00 PM</p>
-                    </div>
-                    <button class="ml-auto px-4 py-2 text-sm text-green-600 hover:bg-green-100 rounded-lg transition-colors">Join</button>
-                </div>
+                {% if meetings %}
+                    {% for meeting in meetings %}
+                        <div class="flex items-center p-4 bg-{{ meeting.color }}-50 rounded-lg border border-{{ meeting.color }}-100">
+                            <div class="flex-shrink-0 w-2 h-2 bg-{{ meeting.color }}-500 rounded-full"></div>
+                            <div class="ml-4">
+                                <p class="font-medium text-neutral-800">{{ meeting.meeting_name }}</p>
+                                <p class="text-sm text-neutral-500">
+                                    {{ meeting.meeting_time.strftime('%I:%M %p') }}
+                                </p>
+                            </div>
+                            {% if meeting.meeting_url %}
+                                <a href="{{ meeting.meeting_url }}" target="_blank" 
+                                   class="ml-auto px-4 py-2 text-sm text-{{ meeting.color }}-600 hover:bg-{{ meeting.color }}-100 rounded-lg transition-colors">
+                                    Join
+                                </a>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="text-neutral-500 text-center py-4">No meetings scheduled for today</p>
+                {% endif %}
             </div>
         </div>
     </div>
-    <!-- Recent Activity -->
+    <!-- Recent Activity Section -->
     <div class="bg-white rounded-lg border border-neutral-200/20 p-6">
-        <h2 class="text-lg font-semibold text-neutral-800 mb-4">Recent Activity</h2>
+        <h2 class="text-lg font-semibold text-neutral-800 mb-4">Recent Tasks</h2>
         <div class="space-y-4">
-            <div class="flex items-start">
-                <div class="flex-shrink-0 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                    <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                    </svg>
-                </div>
-                <div class="ml-3">
-                    <p class="text-sm text-neutral-800">New task added: "Update documentation"</p>
-                    <p class="text-xs text-neutral-500">2 minutes ago</p>
-                </div>
-            </div>
-            <div class="flex items-start">
-                <div class="flex-shrink-0 w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                    <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                </div>
-                <div class="ml-3">
-                    <p class="text-sm text-neutral-800">Meeting summary generated</p>
-                    <p class="text-xs text-neutral-500">15 minutes ago</p>
-                </div>
-            </div>
-            <div class="flex items-start">
-                <div class="flex-shrink-0 w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center">
-                    <svg class="w-4 h-4 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
-                    </svg>
-                </div>
-                <div class="ml-3">
-                    <p class="text-sm text-neutral-800">Decision required: "Q4 Planning"</p>
-                    <p class="text-xs text-neutral-500">1 hour ago</p>
-                </div>
-            </div>
+            {% if activities %}
+                {% for activity in activities %}
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                            <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                      d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                            </svg>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm text-neutral-800">{{ activity.description }}</p>
+                            <p class="text-xs text-neutral-500">
+                                From: {{ activity.meeting_name }} • {{ activity.timestamp.strftime('%B %d, %Y') }}
+                            </p>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p class="text-neutral-500 text-center py-4">No recent tasks</p>
+            {% endif %}
         </div>
     </div>
 </div>

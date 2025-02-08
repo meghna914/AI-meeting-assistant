@@ -4,6 +4,45 @@
 {% block description %}Manage your upcoming meetings.{% endblock %}
 
 {% block content %}
+<!-- First, add this CSS at the top of your file, inside a <style> tag -->
+<style>
+    @keyframes pulse {
+        0% { 
+            opacity: 0.7;
+            text-shadow: 0 0 5px rgba(239, 68, 68, 0.3);
+        }
+        50% { 
+            opacity: 1;
+            text-shadow: 0 0 15px rgba(239, 68, 68, 0.8);
+        }
+        100% { 
+            opacity: 0.7;
+            text-shadow: 0 0 5px rgba(239, 68, 68, 0.3);
+        }
+    }
+    .live-indicator {
+        animation: pulse 2s ease-in-out infinite;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+    }
+    .live-dot {
+        width: 8px;
+        height: 8px;
+        background-color: #EF4444;
+        border-radius: 50%;
+        margin-right: 8px;
+        box-shadow: 0 0 10px rgba(239, 68, 68, 0.6);
+        animation: pulse 2s ease-in-out infinite;
+    }
+    .live-container {
+        padding: 4px 8px;
+        background-color: rgba(239, 68, 68, 0.1);
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+    }
+</style>
+
 <!-- Meetings Header -->
 <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
     <h1 class="text-2xl font-bold text-neutral-800">Upcoming Meetings</h1>
@@ -34,7 +73,7 @@
             <option>Google Meet</option>
             <option>Microsoft Teams</option>
         </select>
-        <button class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
+        <button onclick="openModal()" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
             Schedule Meeting
         </button>
     </div>
@@ -80,73 +119,190 @@
 <div class="space-y-4">
     <h3 class="text-lg font-semibold text-neutral-800 mb-4">Today's Meetings</h3>
     <div class="bg-white rounded-lg border border-neutral-200/20 p-4 space-y-4">
-        <div class="flex items-center justify-between p-4 bg-blue-50 rounded-lg border border-blue-100">
-            <div class="flex items-center space-x-4">
-                <div class="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">
-                    <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
-                    </svg>
+        {% if today_meetings %}
+            {% for meeting in today_meetings %}
+                <div class="flex items-center justify-between p-4 bg-{{ meeting.color }}-50 rounded-lg border border-{{ meeting.color }}-100">
+                    <div class="flex items-center space-x-4">
+                        <div class="h-10 w-10 rounded-full bg-{{ meeting.color }}-100 flex items-center justify-center">
+                            <svg class="w-6 h-6 text-{{ meeting.color }}-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4 class="font-medium text-neutral-800">{{ meeting.meeting_name }}</h4>
+                            <p class="text-sm text-neutral-500">
+                                {{ meeting.meeting_time.strftime('%I:%M %p') }} • {{ meeting.meeting_platform }}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4 items-center">
+                        {% if meeting.meeting_time <= current_time and meeting.meeting_time + timedelta(hours=1) >= current_time %}
+                            <div class="flex items-center">
+                                <div class="live-container">
+                                    <div class="live-dot"></div>
+                                    <span class="live-indicator text-red-500">LIVE</span>
+                                </div>
+                            </div>
+                            {% if meeting.meeting_url %}
+                                <a href="{{ meeting.meeting_url }}" target="_blank" 
+                                   class="px-4 py-2 text-sm bg-{{ meeting.color }}-500 text-white rounded-lg hover:bg-{{ meeting.color }}-600 transition-colors">
+                                    Bot Attending
+                                </a>
+                            {% endif %}
+                        {% else %}
+                            <button onclick="showDetails('{{ meeting.meeting_name }}', '{{ meeting.meeting_time.strftime('%B %d, %Y %I:%M %p') }}', '{{ meeting.meeting_platform }}', '{{ meeting.meeting_url }}')" 
+                                    class="px-4 py-2 text-sm text-neutral-600 hover:bg-neutral-100 rounded-lg transition-colors">
+                                View Details
+                            </button>
+                            {% if meeting.meeting_url %}
+                                <button onclick="toggleJoinButton(this)" 
+                                        data-url="{{ meeting.meeting_url }}"
+                                        class="px-4 py-2 text-sm bg-{{ meeting.color }}-500 text-white rounded-lg hover:bg-{{ meeting.color }}-600 transition-colors">
+                                    Allow Joining
+                                </button>
+                            {% endif %}
+                        {% endif %}
+                    </div>
                 </div>
-                <div>
-                    <h4 class="font-medium text-neutral-800">Weekly Team Sync</h4>
-                    <p class="text-sm text-neutral-500">10:00 AM - 11:00 AM • Zoom</p>
-                    <p class="text-sm text-neutral-500">8 participants</p>
-                </div>
-            </div>
-            <div class="flex gap-2">
-                <button class="px-4 py-2 text-sm text-neutral-600 hover:bg-neutral-100 rounded-lg transition-colors">
-                    View Details
-                </button>
-                <button class="px-4 py-2 text-sm bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
-                    Join Meeting
-                </button>
-            </div>
-        </div>
-        <div class="flex items-center justify-between p-4 bg-purple-50 rounded-lg border border-purple-100">
-            <div class="flex items-center space-x-4">
-                <div class="h-10 w-10 rounded-full bg-purple-100 flex items-center justify-center">
-                    <svg class="w-6 h-6 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-                    </svg>
-                </div>
-                <div>
-                    <h4 class="font-medium text-neutral-800">Product Review</h4>
-                    <p class="text-sm text-neutral-500">2:00 PM - 3:30 PM • Google Meet</p>
-                    <p class="text-sm text-neutral-500">5 participants</p>
-                </div>
-            </div>
-            <div class="flex gap-2">
-                <button class="px-4 py-2 text-sm text-neutral-600 hover:bg-neutral-100 rounded-lg transition-colors">
-                    View Details
-                </button>
-                <button class="px-4 py-2 text-sm bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors">
-                    Join Meeting
-                </button>
-            </div>
-        </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-neutral-500 text-center py-4">No meetings scheduled for today</p>
+        {% endif %}
     </div>
+
     <h3 class="text-lg font-semibold text-neutral-800 mt-8 mb-4">Tomorrow</h3>
     <div class="bg-white rounded-lg border border-neutral-200/20 p-4 space-y-4">
-        <div class="flex items-center justify-between p-4 bg-green-50 rounded-lg border border-green-100">
-            <div class="flex items-center space-x-4">
-                <div class="h-10 w-10 rounded-full bg-green-100 flex items-center justify-center">
-                    <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                    </svg>
+        {% if tomorrow_meetings %}
+            {% for meeting in tomorrow_meetings %}
+                <div class="flex items-center justify-between p-4 bg-{{ meeting.color }}-50 rounded-lg border border-{{ meeting.color }}-100">
+                    <div class="flex items-center space-x-4">
+                        <div class="h-10 w-10 rounded-full bg-{{ meeting.color }}-100 flex items-center justify-center">
+                            <svg class="w-6 h-6 text-{{ meeting.color }}-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4 class="font-medium text-neutral-800">{{ meeting.meeting_name }}</h4>
+                            <p class="text-sm text-neutral-500">
+                                {{ meeting.meeting_time.strftime('%I:%M %p') }} • {{ meeting.meeting_platform }}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4 items-center">
+                        {% if meeting.meeting_time <= current_time and meeting.meeting_time + timedelta(hours=1) >= current_time %}
+                            <div class="flex items-center">
+                                <div class="live-container">
+                                    <div class="live-dot"></div>
+                                    <span class="live-indicator text-red-500">LIVE</span>
+                                </div>
+                            </div>
+                            {% if meeting.meeting_url %}
+                                <a href="{{ meeting.meeting_url }}" target="_blank" 
+                                   class="px-4 py-2 text-sm bg-{{ meeting.color }}-500 text-white rounded-lg hover:bg-{{ meeting.color }}-600 transition-colors">
+                                    Bot Attending
+                                </a>
+                            {% endif %}
+                        {% else %}
+                            <button onclick="showDetails('{{ meeting.meeting_name }}', '{{ meeting.meeting_time.strftime('%B %d, %Y %I:%M %p') }}', '{{ meeting.meeting_platform }}', '{{ meeting.meeting_url }}')" 
+                                    class="px-4 py-2 text-sm text-neutral-600 hover:bg-neutral-100 rounded-lg transition-colors">
+                                View Details
+                            </button>
+                            {% if meeting.meeting_url %}
+                                <button onclick="toggleJoinButton(this)" 
+                                        data-url="{{ meeting.meeting_url }}"
+                                        class="px-4 py-2 text-sm bg-{{ meeting.color }}-500 text-white rounded-lg hover:bg-{{ meeting.color }}-600 transition-colors">
+                                    Allow Joining
+                                </button>
+                            {% endif %}
+                        {% endif %}
+                    </div>
                 </div>
-                <div>
-                    <h4 class="font-medium text-neutral-800">Client Meeting</h4>
-                    <p class="text-sm text-neutral-500">11:00 AM - 12:00 PM • Microsoft Teams</p>
-                    <p class="text-sm text-neutral-500">4 participants</p>
-                </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-neutral-500 text-center py-4">No meetings scheduled for tomorrow</p>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Schedule Meeting Modal -->
+<div id="scheduleModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+    <div class="bg-white rounded-lg p-6 w-full max-w-md">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-lg font-semibold text-neutral-800">Schedule Meeting</h2>
+            <button onclick="closeModal()" class="text-neutral-500 hover:text-neutral-700">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+        <form id="scheduleForm" class="space-y-4" onsubmit="handleSubmit(event)">
+            <div>
+                <label for="meetingName" class="block text-sm font-medium text-neutral-700 mb-1">Meeting Name</label>
+                <input type="text" id="meetingName" name="meetingName" required
+                    class="w-full px-4 py-2 rounded-lg border border-neutral-200 focus:outline-none focus:border-blue-500">
             </div>
-            <div class="flex gap-2">
-                <button class="px-4 py-2 text-sm text-neutral-600 hover:bg-neutral-100 rounded-lg transition-colors">
-                    View Details
+            <div>
+                <label for="meetingTime" class="block text-sm font-medium text-neutral-700 mb-1">Meeting Time</label>
+                <input type="datetime-local" id="meetingTime" name="meetingTime" required
+                    class="w-full px-4 py-2 rounded-lg border border-neutral-200 focus:outline-none focus:border-blue-500">
+            </div>
+            <div>
+                <label for="meetingUrl" class="block text-sm font-medium text-neutral-700 mb-1">Meeting URL</label>
+                <input type="url" id="meetingUrl" name="meetingUrl" required
+                    class="w-full px-4 py-2 rounded-lg border border-neutral-200 focus:outline-none focus:border-blue-500"
+                    placeholder="https://...">
+            </div>
+            <div>
+                <label for="meetingPlatform" class="block text-sm font-medium text-neutral-700 mb-1">Platform</label>
+                <select id="meetingPlatform" name="meetingPlatform" required
+                    class="w-full px-4 py-2 rounded-lg border border-neutral-200 focus:outline-none focus:border-blue-500">
+                    <option value="">Select Platform</option>
+                    <option value="Zoom">Zoom</option>
+                    <option value="Google Meet">Google Meet</option>
+                    <option value="Microsoft Teams">Microsoft Teams</option>
+                </select>
+            </div>
+            <div class="flex justify-end space-x-3 mt-6">
+                <button type="button" onclick="closeModal()"
+                    class="px-4 py-2 text-sm text-neutral-600 hover:bg-neutral-100 rounded-lg transition-colors">
+                    Cancel
                 </button>
-                <button class="px-4 py-2 text-sm bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors">
-                    Join Meeting
+                <button type="submit"
+                    class="px-4 py-2 text-sm bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
+                    Schedule Meeting
                 </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- View Details Modal -->
+<div id="detailsModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+    <div class="bg-white rounded-lg p-6 w-full max-w-md">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-lg font-semibold text-neutral-800">Meeting Details</h2>
+            <button onclick="closeDetailsModal()" class="text-neutral-500 hover:text-neutral-700">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+        <div class="space-y-4">
+            <div>
+                <h3 class="text-sm font-medium text-neutral-500">Meeting Name</h3>
+                <p id="detailMeetingName" class="text-neutral-800"></p>
+            </div>
+            <div>
+                <h3 class="text-sm font-medium text-neutral-500">Date & Time</h3>
+                <p id="detailMeetingTime" class="text-neutral-800"></p>
+            </div>
+            <div>
+                <h3 class="text-sm font-medium text-neutral-500">Platform</h3>
+                <p id="detailMeetingPlatform" class="text-neutral-800"></p>
+            </div>
+            <div>
+                <h3 class="text-sm font-medium text-neutral-500">Meeting URL</h3>
+                <a id="detailMeetingUrl" href="#" target="_blank" class="text-blue-500 hover:text-blue-600 break-all"></a>
             </div>
         </div>
     </div>
