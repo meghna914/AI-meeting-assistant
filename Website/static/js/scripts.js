@@ -118,3 +118,89 @@ document.addEventListener('click', function(event) {
         closeDetailsModal();
     }
 });
+
+let currentAudio = null;
+
+function playAudio(meetingId) {
+    if (currentAudio) {
+        currentAudio.pause();
+        currentAudio = null;
+    }
+    
+    currentAudio = new Audio(`/play-audio/${meetingId}`);
+    currentAudio.play().catch(error => {
+        console.error('Error playing audio:', error);
+        alert('Error playing audio. Please try again.');
+    });
+}
+
+function handleChatSubmit(event) {
+    event.preventDefault();
+    
+    const messageInput = document.getElementById('messageInput');
+    const message = messageInput.value.trim();
+    if (!message) return;
+
+    // Add user message
+    addMessageToChat('user', message);
+    messageInput.value = '';
+
+    // Send to backend and get response
+    fetch('/chat', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            message: message,
+            meeting_id: currentMeetingId  // Make sure to set this variable somewhere
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        addMessageToChat('assistant', data.response);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        addMessageToChat('assistant', 'Sorry, I encountered an error processing your request.');
+    });
+}
+
+function addMessageToChat(type, message) {
+    const chatMessages = document.getElementById('chatMessages');
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'flex items-start';
+
+    if (type === 'user') {
+        messageDiv.classList.add('justify-end');
+        messageDiv.innerHTML = `
+            <div class="mr-3 bg-blue-500 rounded-lg py-2 px-4 max-w-[80%]">
+                <p class="text-white">${escapeHtml(message)}</p>
+            </div>
+        `;
+    } else {
+        messageDiv.innerHTML = `
+            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+                <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                          d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
+                </svg>
+            </div>
+            <div class="ml-3 bg-blue-50 rounded-lg py-2 px-4 max-w-[80%]">
+                <p class="text-neutral-600">${escapeHtml(message)}</p>
+            </div>
+        `;
+    }
+
+    chatMessages.appendChild(messageDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function escapeHtml(unsafe) {
+    return unsafe
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}

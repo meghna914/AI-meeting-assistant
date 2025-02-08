@@ -1,8 +1,9 @@
-from flask import Flask, request, jsonify, render_template, redirect, url_for, session
+from flask import Flask, request, jsonify, render_template, redirect, url_for, session, send_file, Response
 from models import users_collection, meetings_collection
 from bson.objectid import ObjectId
 from datetime import datetime, timedelta
 from functools import wraps
+import io
 
 app = Flask(__name__)
 app.secret_key = 'your-secret-key-here'  # Add a secret key for sessions
@@ -161,7 +162,45 @@ def meetings():
 @app.route('/recordings')
 @login_required
 def recordings():
-    return render_template('recordings.html', user=session.get('user'))
+    # Get current user's meetings with recordings
+    user_email = session.get('user')['email']
+    user_data = users_collection.find_one({"email": user_email})
+    
+    # Get all meetings for the user that have audio recordings
+    recordings = list(meetings_collection.find({
+        "meeting_id": {"$in": user_data.get("meetings", [])},
+        "meeting_audio": {"$exists": True}
+    }).sort("meeting_time", -1))  # Sort by most recent first
+
+    return render_template(
+        'recordings.html',
+        recordings=recordings
+    )
+
+@app.route('/play-audio/<meeting_id>')
+@login_required
+def play_audio(meeting_id):
+    meeting = meetings_collection.find_one({"meeting_id": meeting_id})
+    if meeting and meeting.get('meeting_audio'):
+        return Response(
+            io.BytesIO(meeting['meeting_audio']),
+            mimetype='audio/mpeg',
+            headers={'Content-Disposition': f'inline; filename={meeting_id}.mp3'}
+        )
+    return "Audio not found", 404
+
+@app.route('/download-audio/<meeting_id>')
+@login_required
+def download_audio(meeting_id):
+    meeting = meetings_collection.find_one({"meeting_id": meeting_id})
+    if meeting and meeting.get('meeting_audio'):
+        return send_file(
+            io.BytesIO(meeting['meeting_audio']),
+            mimetype='audio/mpeg',
+            as_attachment=True,
+            download_name=f"{meeting['meeting_name']}.mp3"
+        )
+    return "Audio not found", 404
 
 @app.route('/analytics')
 @login_required
@@ -215,6 +254,37 @@ def schedule_meeting():
         return jsonify({"success": True, "message": "Meeting scheduled successfully"})
     except Exception as e:
         return jsonify({"success": False, "message": str(e)})
+
+@app.route('/meeting/summary/<meeting_id>')
+@login_required
+def view_summary(meeting_id):
+    # Get the meeting details
+    meeting = meetings_collection.find_one({"meeting_id": meeting_id})
+    
+    if not meeting:
+        flash('Meeting not found', 'error')
+        return redirect(url_for('recordings'))
+    
+    return render_template(
+        'summary.html',
+        meeting=meeting,
+        user=session.get('user')
+    )
+
+@app.route('/chat', methods=['POST'])
+@login_required
+def chat():
+    data = request.json
+    message = data.get('message')
+    meeting_id = data.get('meeting_id')
+
+    # Here you would implement your chatbot logic
+    # For now, just echo back a response
+    response = f"I received your message about meeting {meeting_id}: {message}"
+
+    return jsonify({
+        'response': response
+    })
 
 if __name__ == "__main__":
     app.run(debug=True)
