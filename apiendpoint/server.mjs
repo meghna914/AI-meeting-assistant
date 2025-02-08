@@ -34,7 +34,7 @@ const upload = multer({ storage });
 
 // Create Express app
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 // Unified transcription and organization endpoint
 app.post('/transcribe', upload.single('audio'), async (req, res) => {

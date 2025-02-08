@@ -1,5 +1,6 @@
 const express = require('express');
 const session = require('express-session');
+const fs = require('fs'); // Required for writing token.json
 const { google } = require('googleapis');
 
 const app = express();
@@ -71,36 +72,21 @@ app.get('/auth/google/callback', async (req, res) => {
     // Optionally store tokens in session if needed
     req.session.tokens = tokens;
 
-    // Use the Calendar API to list upcoming events
-    const calendar = google.calendar({ version: 'v3', auth: oauth2Client });
-    const calendarResponse = await calendar.events.list({
-      calendarId: 'primary',
-      maxResults: 10,
-      singleEvents: true,
-      orderBy: 'startTime',
-    });
-    
-    // Extract meeting details from events
-    const events = calendarResponse.data.items;
-    const meetings = events.map((event) => {
-      return {
-        summary: event.summary,
-        start: event.start.dateTime || event.start.date,
-        end: event.end.dateTime || event.end.date,
-      };
-    });
+    // Write tokens to token.json (formatted for readability)
+    fs.writeFileSync('token.json', JSON.stringify(tokens, null, 2));
+    console.log('Tokens saved to token.json');
 
-    // For demonstration, send back the access token and calendar meetings as JSON.
-    // In production you might redirect to your frontend with these details securely.
-    res.json({
-      token: tokens.access_token,
-      meetings: meetings,
-    });
+    // Log before redirecting
+    console.log('Authentication successful. Redirecting to dashboard...');
+    
+    // Redirect to localhost:5000/dashboard after authentication
+    res.redirect('http://localhost:5000/dashboard');
   } catch (error) {
     console.error('Error during OAuth callback processing:', error);
     res.status(500).send('Authentication error.');
   }
 });
+
 
 // Start the Express server on port 3000
 app.listen(3000, () => {
